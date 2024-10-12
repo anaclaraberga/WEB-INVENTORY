@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, BrowserRouter, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import { Dashboard } from './pages/dashboard/dashboard'
 
@@ -7,9 +7,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Router>
+        <Route>
           <Route path="/" element={<Dashboard />} />
-        </Router>
+        </Route>
       </Routes>
     </BrowserRouter>
   )
