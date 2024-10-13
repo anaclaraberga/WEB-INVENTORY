@@ -13,6 +13,7 @@ import {
   IconHexagonNumber4,
   IconHexagonNumber5,
   IconLayoutDashboard,
+  IconLock,
   IconMessages,
   IconRouteAltLeft,
   IconServerOff,
@@ -20,8 +21,9 @@ import {
   IconTruck,
   IconUserShield,
   IconUsers,
-  IconLock,
 } from '@tabler/icons-react'
+
+import { Package } from 'lucide-react'
 
 export interface NavLink {
   title: string
@@ -40,6 +42,12 @@ export const sidelinks: SideLink[] = [
     label: '',
     href: '/',
     icon: <IconLayoutDashboard size={18} />,
+  },
+  {
+    title: 'Produtos',
+    label: '',
+    href: '/products',
+    icon: <Package size={18} />,
   },
   {
     title: 'Tasks',
