@@ -1,33 +1,21 @@
-import { Layout } from '@/components/custom/layout'
-import { Search } from '@/components/search'
-import ThemeSwitch from '@/components/theme-switch'
-import { UserNav } from '@/components/user-nav'
+import { Button } from '@/components/custom/button'
+import { BaseTemplate } from '@/template/Base'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
 import { tasks } from './data/tasks'
 
-export default function Tasks() {
+export default function Products() {
   return (
-    <Layout>
-      {/* ===== Top Heading ===== */}
-      <Layout.Header sticky>
-        <Search />
-        <div className='ml-auto flex items-center space-x-4'>
-          <ThemeSwitch />
-          <UserNav />
+    <BaseTemplate>
+      <div className='mb-2 flex items-center justify-between space-y-2'>
+        <div className='flex w-full justify-between'>
+          <h2 className='text-2xl font-bold tracking-tight'>Produtos</h2>
+          <Button>New product</Button>
         </div>
-      </Layout.Header>
-
-      <Layout.Body>
-        <div className='mb-2 flex items-center justify-between space-y-2'>
-          <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Produtos</h2>
-          </div>
-        </div>
-        <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={tasks} columns={columns} />
-        </div>
-      </Layout.Body>
-    </Layout>
+      </div>
+      <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
+        <DataTable data={tasks} columns={columns} />
+      </div>
+    </BaseTemplate>
   )
 }
