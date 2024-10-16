@@ -3,17 +3,31 @@ import { Table } from '@tanstack/react-table'
 
 import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
-import { DataTableViewOptions } from '../components/data-table-view-options'
+import { DataTableViewOptions } from './data-table-view-options'
 
-import { priorities, statuses } from '../data/enums'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
+
+export interface DataTableToolbarConfig {
+  placeholder: string,
+  searchKey: string,
+  filters: {
+    key: string,
+    title: string,
+    options: {
+      label: string,
+      value: string,
+      icon?: React.ComponentType<{ className?: string }>
+    }[]
+  }[]
+}
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
+  config: DataTableToolbarConfig
 }
 
 export function DataTableToolbar<TData>({
-  table,
+  table, config
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
@@ -21,28 +35,23 @@ export function DataTableToolbar<TData>({
     <div className='flex items-center justify-between'>
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
-          placeholder='Filtar produtos...'
-          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
+          placeholder={config.placeholder}
+          value={(table.getColumn(config.searchKey)?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('title')?.setFilterValue(event.target.value)
+            table.getColumn(config.searchKey)?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('status') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('status')}
-              title='Status'
-              options={statuses}
-            />
-          )}
-          {table.getColumn('priority') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('priority')}
-              title='Priority'
-              options={priorities}
-            />
-          )}
+          {config.filters.map((filter) => {
+            return table.getColumn(filter.key) && (
+              <DataTableFacetedFilter
+                column={table.getColumn(filter.key)}
+                title={filter.title}
+                options={filter.options}
+              />
+            )
+          })}
         </div>
         {isFiltered && (
           <Button

@@ -16,17 +16,23 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { labels } from '../data/enums'
-import { taskSchema } from '../data/schema'
+interface DropdownOption {
+  value: string,
+  label: string,
+}
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
+  options: DropdownOption[]
+  schema: any
 }
 
 export function DataTableRowActions<TData>({
   row,
+  options,
+  schema
 }: DataTableRowActionsProps<TData>) {
-  const task = taskSchema.parse(row.original)
+  const item = schema.parse(row.original)
 
   return (
     <DropdownMenu>
@@ -47,8 +53,8 @@ export function DataTableRowActions<TData>({
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.label}>
-              {labels.map((label) => (
+            <DropdownMenuRadioGroup value={item.label}>
+              {options.map((label: DropdownOption) => (
                 <DropdownMenuRadioItem key={label.value} value={label.value}>
                   {label.label}
                 </DropdownMenuRadioItem>
