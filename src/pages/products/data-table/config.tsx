@@ -1,10 +1,26 @@
 import { ColumnDef } from '@tanstack/react-table'
 
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
+import { DataTableRowActions } from '@/components/data-table/data-table-row-actions'
 import { Checkbox } from '@/components/ui/checkbox'
-import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
 
-import { ProductSchema } from '../data/schema'
+import { DataTableToolbarConfig } from '@/components/data-table/data-table-toolbar'
+import { ProductSchema, productSchema } from './schema'
+
+export const rowActionsOptions = [
+  {
+    value: 'bug',
+    label: 'Bug',
+  },
+  {
+    value: 'feature',
+    label: 'Feature',
+  },
+  {
+    value: 'documentation',
+    label: 'Documentation',
+  },
+]
 
 export const columns: ColumnDef<ProductSchema>[] = [
   {
@@ -60,6 +76,12 @@ export const columns: ColumnDef<ProductSchema>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <DataTableRowActions row={row} schema={productSchema} options={rowActionsOptions} />,
   },
 ]
+
+export const toolbar: DataTableToolbarConfig = {
+  placeholder: 'Filtrar produtos...',
+  searchKey: 'name',
+  filters: []
+}
