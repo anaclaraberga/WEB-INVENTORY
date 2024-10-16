@@ -2,7 +2,7 @@ import { Button } from '@/components/custom/button'
 import { BaseTemplate } from '@/template/Base'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
-import { data } from './data/tasks'
+import { data } from './data/data'
 
 export default function Products() {
   return (
