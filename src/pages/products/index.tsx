@@ -2,7 +2,7 @@ import { Button } from '@/components/custom/button'
 import { BaseTemplate } from '@/template/Base'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
-import { tasks } from './data/tasks'
+import { data } from './data/tasks'
 
 export default function Products() {
   return (
@@ -14,7 +14,7 @@ export default function Products() {
         </div>
       </div>
       <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-        <DataTable data={tasks} columns={columns} />
+        <DataTable data={data} columns={columns} />
       </div>
     </BaseTemplate>
   )
