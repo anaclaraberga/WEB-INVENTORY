@@ -1,24 +1,24 @@
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-import { Row } from '@tanstack/react-table'
-
 import { Button } from '@/components/custom/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { Row } from '@tanstack/react-table'
+import { EllipsisVertical } from 'lucide-react'
 
-interface DropdownOption {
-  value: string,
+export interface DropdownOption {
   label: string,
+  value: string,
+  type: 'item' | 'sub',
+  options?: DropdownOption[]
+  onClick?: () => void,
+  className?: string
 }
 
 interface DataTableRowActionsProps<TData> {
@@ -34,6 +34,29 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const item = schema.parse(row.original)
 
+  const renderDropdownOption = (option: DropdownOption) => {
+    if (option.type == 'item') {
+      return (
+        <DropdownMenuItem key={option.value} onClick={option.onClick} className={option.className}>
+          {option.label}
+        </DropdownMenuItem>
+      )
+    }
+
+    if (option.type == 'sub') {
+      return (
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>{option.label}</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuRadioGroup value={option.value}>
+              {option.options?.map((e) => renderDropdownOption(e))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+      )
+    }
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -41,32 +64,12 @@ export function DataTableRowActions<TData>({
           variant='ghost'
           className='flex h-8 w-8 p-0 data-[state=open]:bg-muted'
         >
-          <DotsHorizontalIcon className='h-4 w-4' />
+          <EllipsisVertical className='h-4 w-4' />
           <span className='sr-only'>Open menu</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={item.label}>
-              {options.map((label: DropdownOption) => (
-                <DropdownMenuRadioItem key={label.value} value={label.value}>
-                  {label.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        {options.map((option: DropdownOption) => renderDropdownOption(option))}
       </DropdownMenuContent>
     </DropdownMenu>
   )
