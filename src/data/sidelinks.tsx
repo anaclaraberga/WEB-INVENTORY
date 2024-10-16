@@ -1,10 +1,8 @@
 import {
-  IconApps,
   IconBarrierBlock,
   IconBoxSeam,
   IconChartHistogram,
   IconChecklist,
-  IconComponents,
   IconError404,
   IconExclamationCircle,
   IconHexagonNumber1,
@@ -14,13 +12,11 @@ import {
   IconHexagonNumber5,
   IconLayoutDashboard,
   IconLock,
-  IconMessages,
   IconRouteAltLeft,
   IconServerOff,
-  IconSettings,
   IconTruck,
   IconUserShield,
-  IconUsers,
+  IconUsers
 } from '@tabler/icons-react'
 
 import { Package } from 'lucide-react'
@@ -54,18 +50,6 @@ export const sidelinks: SideLink[] = [
     label: '3',
     href: '/tasks',
     icon: <IconChecklist size={18} />,
-  },
-  {
-    title: 'Chats',
-    label: '9',
-    href: '/chats',
-    icon: <IconMessages size={18} />,
-  },
-  {
-    title: 'Apps',
-    label: '',
-    href: '/apps',
-    icon: <IconApps size={18} />,
   },
   {
     title: 'Authentication',
@@ -138,12 +122,6 @@ export const sidelinks: SideLink[] = [
     icon: <IconChartHistogram size={18} />,
   },
   {
-    title: 'Extra Components',
-    label: '',
-    href: '/extra-components',
-    icon: <IconComponents size={18} />,
-  },
-  {
     title: 'Error Pages',
     label: '',
     href: '',
@@ -174,11 +152,5 @@ export const sidelinks: SideLink[] = [
         icon: <IconLock size={18} />,
       },
     ],
-  },
-  {
-    title: 'Settings',
-    label: '',
-    href: '/settings',
-    icon: <IconSettings size={18} />,
   },
 ]
