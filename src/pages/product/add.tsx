@@ -9,12 +9,14 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { NumberUtils } from '@/utils/NumberUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { defaultValues, productFormSchema, ProductFormValues } from './form-schema'
 
 export default function AddProductPage() {
@@ -109,13 +111,15 @@ export default function AddProductPage() {
             name='quantity'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Preço</FormLabel>
+                <FormLabel>Quantidade</FormLabel>
                 <FormControl>
                   <Input
                     className='shadcn'
                     {...field}
                     onChange={(e) =>
-                      form.setValue("quantity", Number(e.target.value))
+                      {
+                        let value = e.target.value.replace(/\D/g, '');
+                        form.setValue("quantity", Number(value))}
                     } />
                 </FormControl>
                 <FormDescription>
@@ -143,9 +147,39 @@ export default function AddProductPage() {
                         form.setValue("image", selectedFile as File);
                       }
                     }}
+
                   />
                 </FormControl>
                 <FormDescription>
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='fornecedorId'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder='Select a verified email to display' />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value='m@example.com'>m@example.com</SelectItem>
+                    <SelectItem value='m@google.com'>m@google.com</SelectItem>
+                    <SelectItem value='m@support.com'>m@support.com</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  You can manage verified email addresses in your{' '}
+                  <Link to='/examples/forms'>email settings</Link>.
                 </FormDescription>
                 <FormMessage />
               </FormItem>

@@ -25,12 +25,17 @@ export const productFormSchema = z.object({
       required_error: 'O produto precisa ter uma quantidade',
       message: 'Quantidade inválida'
     })
-    .positive(),
+    .positive()
+    .nonnegative(),
   image: z
     .instanceof(File)
     .refine((file) => file.size <= 5000000, { message: "O arquivo deve ter no máximo 5MB" })
     .refine((file) => ["image/jpeg", "image/png"].includes(file.type), {
       message: "Apenas arquivos JPEG ou PNG são permitidos",
+    }),
+  fornecedorId: z
+    .string({
+      required_error: 'O produto precisa ter um fornecedor',
     })
 })
 
