@@ -9,70 +9,22 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
-import { cn } from '@/lib/utils'
 import { BaseTemplate } from '@/template/Base'
+import { NumberUtils } from '@/utils/NumberUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useFieldArray, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-import { z } from 'zod'
-
-const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: 'Username must be at least 2 characters.',
-    })
-    .max(30, {
-      message: 'Username must not be longer than 30 characters.',
-    }),
-  email: z
-    .string({
-      required_error: 'Please select an email to display.',
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: 'Please enter a valid URL.' }),
-      })
-    )
-    .optional(),
-})
-
-type ProfileFormValues = z.infer<typeof profileFormSchema>
-
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: 'I own a computer.',
-  urls: [
-    { value: 'https://shadcn.com' },
-    { value: 'http://twitter.com/shadcn' },
-  ],
-}
+import { useForm } from 'react-hook-form'
+import { defaultValues, productFormSchema, ProductFormValues } from './form-schema'
 
 export default function AddProductPage() {
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+  const form = useForm<ProductFormValues>({
+    resolver: zodResolver(productFormSchema),
     defaultValues,
     mode: 'onChange',
   })
 
-  const { fields, append } = useFieldArray({
-    name: 'urls',
-    control: form.control,
-  })
-
-  function onSubmit(data: ProfileFormValues) {
+  function onSubmit(data: ProductFormValues) {
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -94,7 +46,7 @@ export default function AddProductPage() {
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
           <FormField
             control={form.control}
-            name='username'
+            name='name'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Username</FormLabel>
@@ -111,28 +63,19 @@ export default function AddProductPage() {
           />
           <FormField
             control={form.control}
-            name='email'
+            name='description'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder='Select a verified email to display' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value='m@example.com'>m@example.com</SelectItem>
-                    <SelectItem value='m@google.com'>m@google.com</SelectItem>
-                    <SelectItem value='m@support.com'>m@support.com</SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormLabel>Descrição</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder='Notebook de altíssima qualidade'
+                    className='resize-none'
+                    {...field}
+                  />
+                </FormControl>
                 <FormDescription>
-                  You can manage verified email addresses in your{' '}
-                  <Link to='/examples/forms'>email settings</Link>.
+                  (Opcional) Descrição do produto
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -140,57 +83,74 @@ export default function AddProductPage() {
           />
           <FormField
             control={form.control}
-            name='bio'
+            name='price'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Bio</FormLabel>
+                <FormLabel>Preço</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder='Tell us a little bit about yourself'
-                    className='resize-none'
+                  <Input
+                    className='shadcn'
                     {...field}
-                  />
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, '');
+                      form.setValue("price", Number(value))
+                    }}
+                    value={NumberUtils.formatToBRLCurrency(field.value)} />
                 </FormControl>
                 <FormDescription>
-                  You can <span>@mention</span> other users and organizations to
-                  link to them.
+                  Preço unitário do produto
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div>
-            {fields.map((field, index) => (
-              <FormField
-                control={form.control}
-                key={field.id}
-                name={`urls.${index}.value`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className={cn(index !== 0 && 'sr-only')}>
-                      URLs
-                    </FormLabel>
-                    <FormDescription className={cn(index !== 0 && 'sr-only')}>
-                      Add links to your website, blog, or social media profiles.
-                    </FormDescription>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ))}
-            <Button
-              type='button'
-              variant='outline'
-              size='sm'
-              className='mt-2'
-              onClick={() => append({ value: '' })}
-            >
-              Add URL
-            </Button>
-          </div>
+          <FormField
+            control={form.control}
+            name='quantity'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Preço</FormLabel>
+                <FormControl>
+                  <Input
+                    className='shadcn'
+                    {...field}
+                    onChange={(e) =>
+                      form.setValue("quantity", Number(e.target.value))
+                    } />
+                </FormControl>
+                <FormDescription>
+                  Quantidade em estoque do produto
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='image'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Imagem</FormLabel>
+                <FormControl>
+                  <Input
+                    type='file'
+                    accept="image/jpeg, image/png"
+                    className='shadcn'
+                    onChange={(e) => {
+                      const selectedFile = e.target?.files?.[0]
+                      const result = productFormSchema.safeParse(selectedFile);
+                      if (result.success) {
+                        form.setValue("image", selectedFile as File);
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormDescription>
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button type='submit'>Update profile</Button>
         </form>
       </Form>
