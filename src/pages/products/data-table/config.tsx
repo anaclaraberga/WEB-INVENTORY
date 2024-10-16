@@ -76,6 +76,24 @@ export const columns: ColumnDef<ProductSchema>[] = [
     }
   },
   {
+    accessorKey: 'price',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Preço' />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='flex space-x-2'>
+          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+            {row.getValue('price')}
+          </span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    }
+  },
+  {
     id: 'actions',
     cell: ({ row }) => <DataTableRowActions row={row} schema={productSchema} options={rowActionsOptions} />,
   },
@@ -84,5 +102,22 @@ export const columns: ColumnDef<ProductSchema>[] = [
 export const toolbar: DataTableToolbarConfig = {
   placeholder: 'Filtrar produtos...',
   searchKey: 'name',
-  filters: []
+  filters: [{
+    key: 'price',
+    title: 'Preço',
+    options: [
+      {
+        label: '< 50',
+        value: '50'
+      },
+      {
+        label: '< 100',
+        value: '100'
+      },
+      {
+        label: '< 300',
+        value: '300'
+      }
+    ]
+  }]
 }
