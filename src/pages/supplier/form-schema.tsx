@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const supplierFormSchema = z.object({
   name: z
-    .string({ required_error: "O Fornecedor precisa ter um nome" })
+    .string({ required_error: "O fornecedor precisa ter um nome" })
     .min(3, {
       message: 'Nome precisa ter no mínimo 3 caracteres',
     })
@@ -10,9 +10,8 @@ export const supplierFormSchema = z.object({
       message: 'Nome não pode ser maior que 200 caracteres',
     }),
   contact: z
-    .string()
-    .min(3)
-    .optional(),
+    .string({ required_error: "O fornecedor precisa ter um meio de contato" })
+    .min(3),
   address: z
     .string()
     .min(3)
