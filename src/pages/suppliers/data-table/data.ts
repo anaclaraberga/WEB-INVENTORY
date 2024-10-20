@@ -1,22 +1,10 @@
-import { ProductSchema } from './schema'
+import { SupplierSchema } from './schema'
 
-export const data: ProductSchema[] = [
+export const data: SupplierSchema[] = [
   {
     id: 'TASK-8782',
     name: 'Task 8782',
-    description: 'This is a task',
-    image: 'http://gitumo.zw/ito',
-    price: 100,
-    quantity: 10,
-    fornecedorId: '1',
-  },
-  {
-    id: 'TASK-8782',
-    name: 'Task 8782',
-    description: 'This is a task',
-    image: 'http://gitumo.zw/ito',
-    price: 200,
-    quantity: 10,
-    fornecedorId: '1',
+    contact: '(533) 457-7121',
+    address: '1754 Damup Turnpike',
   },
 ]

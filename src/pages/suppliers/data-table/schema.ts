@@ -4,7 +4,7 @@ export const supplierSchema = z.object({
   id: z.string(),
   name: z.string(),
   contact: z.string(),
-  address: z.number(),
+  address: z.string(),
 })
 
 export type SupplierSchema = z.infer<typeof supplierSchema>
