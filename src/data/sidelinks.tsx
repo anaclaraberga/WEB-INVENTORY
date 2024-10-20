@@ -1,27 +1,17 @@
 import {
-  IconApps,
-  IconBarrierBlock,
-  IconBoxSeam,
   IconChartHistogram,
   IconChecklist,
-  IconComponents,
-  IconError404,
-  IconExclamationCircle,
   IconHexagonNumber1,
   IconHexagonNumber2,
   IconHexagonNumber3,
   IconHexagonNumber4,
   IconHexagonNumber5,
   IconLayoutDashboard,
-  IconMessages,
-  IconRouteAltLeft,
-  IconServerOff,
-  IconSettings,
-  IconTruck,
   IconUserShield,
-  IconUsers,
-  IconLock,
+  IconUsers
 } from '@tabler/icons-react'
+
+import { Package } from 'lucide-react'
 
 export interface NavLink {
   title: string
@@ -42,22 +32,16 @@ export const sidelinks: SideLink[] = [
     icon: <IconLayoutDashboard size={18} />,
   },
   {
+    title: 'Produtos',
+    label: '',
+    href: '/products',
+    icon: <Package size={18} />,
+  },
+  {
     title: 'Tasks',
     label: '3',
     href: '/tasks',
     icon: <IconChecklist size={18} />,
-  },
-  {
-    title: 'Chats',
-    label: '9',
-    href: '/chats',
-    icon: <IconMessages size={18} />,
-  },
-  {
-    title: 'Apps',
-    label: '',
-    href: '/apps',
-    icon: <IconApps size={18} />,
   },
   {
     title: 'Authentication',
@@ -104,73 +88,9 @@ export const sidelinks: SideLink[] = [
     icon: <IconUsers size={18} />,
   },
   {
-    title: 'Requests',
-    label: '10',
-    href: '/requests',
-    icon: <IconRouteAltLeft size={18} />,
-    sub: [
-      {
-        title: 'Trucks',
-        label: '9',
-        href: '/trucks',
-        icon: <IconTruck size={18} />,
-      },
-      {
-        title: 'Cargos',
-        label: '',
-        href: '/cargos',
-        icon: <IconBoxSeam size={18} />,
-      },
-    ],
-  },
-  {
     title: 'Analysis',
     label: '',
     href: '/analysis',
     icon: <IconChartHistogram size={18} />,
-  },
-  {
-    title: 'Extra Components',
-    label: '',
-    href: '/extra-components',
-    icon: <IconComponents size={18} />,
-  },
-  {
-    title: 'Error Pages',
-    label: '',
-    href: '',
-    icon: <IconExclamationCircle size={18} />,
-    sub: [
-      {
-        title: 'Not Found',
-        label: '',
-        href: '/404',
-        icon: <IconError404 size={18} />,
-      },
-      {
-        title: 'Internal Server Error',
-        label: '',
-        href: '/500',
-        icon: <IconServerOff size={18} />,
-      },
-      {
-        title: 'Maintenance Error',
-        label: '',
-        href: '/503',
-        icon: <IconBarrierBlock size={18} />,
-      },
-      {
-        title: 'Unauthorised Error',
-        label: '',
-        href: '/401',
-        icon: <IconLock size={18} />,
-      },
-    ],
-  },
-  {
-    title: 'Settings',
-    label: '',
-    href: '/settings',
-    icon: <IconSettings size={18} />,
   },
 ]
