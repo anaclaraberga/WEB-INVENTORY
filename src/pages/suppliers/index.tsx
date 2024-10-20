@@ -2,11 +2,15 @@ import { Button } from '@/components/custom/button'
 import { DataTable } from '@/components/data-table/data-table'
 import { BaseTemplate } from '@/template/Base'
 import { useNavigate } from 'react-router-dom'
-import { columns, toolbar } from './data-table/config'
+import { columns, rowActionsOptions, toolbar } from './data-table/config'
 import { data } from './data-table/data'
 
 export default function Supplier() {
   const navigation = useNavigate()
+
+  rowActionsOptions[0].onClick = () => {
+    navigation('/supplier/add/1')
+  }
 
   return (
     <BaseTemplate>

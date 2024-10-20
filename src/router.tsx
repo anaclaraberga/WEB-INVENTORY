@@ -71,10 +71,11 @@ const router = createBrowserRouter([
         }),
       },
       {
-        path: 'supplier/add',
+        path: 'supplier/add/:id',
         lazy: async () => ({
           Component: (await import('@/pages/supplier/add')).default,
         }),
+
       },
       {
         path: 'chats',
