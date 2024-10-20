@@ -1,44 +1,28 @@
 import { z } from "zod"
 
-export const productFormSchema = z.object({
+export const supplierFormSchema = z.object({
   name: z
-    .string({ required_error: "O Produto precisa ter um nome" })
+    .string({ required_error: "O Fornecedor precisa ter um nome" })
     .min(3, {
       message: 'Nome precisa ter no mínimo 3 caracteres',
     })
     .max(200, {
       message: 'Nome não pode ser maior que 200 caracteres',
     }),
-  description: z
-    .string({
-      required_error: 'Produto precisa ter uma descrição',
-    })
-    .min(3),
-  price: z
-    .number({
-      required_error: 'O produto precisa ter um preço',
-      message: 'Preço inválido'
-    })
-    .positive(),
-  quantity: z
-    .number({
-      required_error: 'O produto precisa ter uma quantidade',
-      message: 'Quantidade inválida'
-    })
-    .positive()
-    .nonnegative(),
-  image: z
-    .instanceof(FileList),
-  fornecedorId: z
-    .string({
-      required_error: 'O produto precisa ter um fornecedor',
-    })
+  contact: z
+    .string()
+    .min(3)
+    .optional(),
+  address: z
+    .string()
+    .min(3)
+    .optional()
 })
 
-export type ProductFormValues = z.infer<typeof productFormSchema>
+export type SupplierFormValues = z.infer<typeof supplierFormSchema>
 
-export const defaultValues: Partial<ProductFormValues> = {
+export const defaultValues: Partial<SupplierFormValues> = {
   name: '',
-  description: '',
-  price: 0,
+  contact: '',
+  address: ''
 }
