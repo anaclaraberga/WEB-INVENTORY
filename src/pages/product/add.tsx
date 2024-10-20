@@ -16,8 +16,18 @@ import { BaseTemplate } from '@/template/Base'
 import { NumberUtils } from '@/utils/NumberUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 import { defaultValues, productFormSchema, ProductFormValues } from './form-schema'
+
+const fornecedores = [
+  {
+    label: "Fornecedor 1",
+    value: "1"
+  },
+  {
+    label: "Fornecedor 2",
+    value: "2"
+  }
+]
 
 export default function AddProductPage() {
   const form = useForm<ProductFormValues>({
@@ -53,14 +63,10 @@ export default function AddProductPage() {
             name='name'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Nome</FormLabel>
                 <FormControl>
                   <Input placeholder='shadcn' {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name. It can be your real name or
-                  a pseudonym. You can only change this once every 30 days.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -155,26 +161,22 @@ export default function AddProductPage() {
             name='fornecedorId'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Fornecedores</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder='Select a verified email to display' />
+                      <SelectValue placeholder='Fornecedores' />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value='m@example.com'>m@example.com</SelectItem>
-                    <SelectItem value='m@google.com'>m@google.com</SelectItem>
-                    <SelectItem value='m@support.com'>m@support.com</SelectItem>
+                    {fornecedores.map((e, key) => (
+                      <SelectItem value={e.value} key={key}>{e.label}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
-                <FormDescription>
-                  You can manage verified email addresses in your{' '}
-                  <Link to='/examples/forms'>email settings</Link>.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
