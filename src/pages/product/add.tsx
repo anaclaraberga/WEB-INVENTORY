@@ -37,6 +37,8 @@ export default function AddProductPage() {
     })
   }
 
+  const fileRef = form.register("image");
+
   return (
     <BaseTemplate>
       <div className='mb-2 flex items-center justify-between space-y-2'>
@@ -116,10 +118,10 @@ export default function AddProductPage() {
                   <Input
                     className='shadcn'
                     {...field}
-                    onChange={(e) =>
-                      {
-                        let value = e.target.value.replace(/\D/g, '');
-                        form.setValue("quantity", Number(value))}
+                    onChange={(e) => {
+                      let value = e.target.value.replace(/\D/g, '');
+                      form.setValue("quantity", Number(value))
+                    }
                     } />
                 </FormControl>
                 <FormDescription>
@@ -138,16 +140,8 @@ export default function AddProductPage() {
                 <FormControl>
                   <Input
                     type='file'
-                    accept="image/jpeg, image/png"
                     className='shadcn'
-                    onChange={(e) => {
-                      const selectedFile = e.target?.files?.[0]
-                      const result = productFormSchema.safeParse(selectedFile);
-                      if (result.success) {
-                        form.setValue("image", selectedFile as File);
-                      }
-                    }}
-
+                    {...fileRef}
                   />
                 </FormControl>
                 <FormDescription>
@@ -185,7 +179,7 @@ export default function AddProductPage() {
               </FormItem>
             )}
           />
-          <Button type='submit'>Update profile</Button>
+          <Button type='submit'>Save</Button>
         </form>
       </Form>
     </BaseTemplate>
