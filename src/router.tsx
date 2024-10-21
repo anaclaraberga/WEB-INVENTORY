@@ -78,7 +78,7 @@ const router = createBrowserRouter([
 
       },
       {
-        path: 'clients/add/:id',
+        path: 'clients/:id',
         lazy: async () => ({
           Component: (await import('@/pages/clients/add')).default,
         }),

@@ -72,9 +72,6 @@ export const columns: ColumnDef<ClientSchema>[] = [
         </div>
       )
     },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    }
   },
   {
     accessorKey: 'document',
@@ -90,9 +87,6 @@ export const columns: ColumnDef<ClientSchema>[] = [
         </div>
       )
     },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    }
   },
   {
     accessorKey: 'contact',
