@@ -5,19 +5,19 @@ import { useNavigate } from 'react-router-dom'
 import { columns, rowActionsOptions, toolbar } from './data-table/config'
 import { data } from './data-table/data'
 
-export default function Supplier() {
+export default function Clients() {
   const navigation = useNavigate()
 
   rowActionsOptions[0].onClick = () => {
-    navigation('/supplier/add/1')
+    navigation('/clients/add/1')
   }
 
   return (
     <BaseTemplate>
       <div className='mb-2 flex items-center justify-between space-y-2'>
         <div className='flex w-full justify-between'>
-          <h2 className='text-2xl font-bold tracking-tight'>Fornecedores</h2>
-          <Button onClick={() => navigation("/supplier/add")}>Novo fornecedor</Button>
+          <h2 className='text-2xl font-bold tracking-tight'>Clientes</h2>
+          <Button onClick={() => navigation("/supplier/add")}>Novo cliente</Button>
         </div>
       </div>
       <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
