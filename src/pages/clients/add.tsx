@@ -14,16 +14,19 @@ import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { defaultValues, supplierFormSchema, SupplierFormValues } from './form-schema'
+import { useParams } from 'react-router-dom'
+import { clientFormSchema, ClientFormValues, defaultValues } from './form-schema'
 
-export default function AddProductPage() {
-  const form = useForm<SupplierFormValues>({
-    resolver: zodResolver(supplierFormSchema),
+export default function AddClientPage() {
+  const { id } = useParams()
+
+  const form = useForm<ClientFormValues>({
+    resolver: zodResolver(clientFormSchema),
     defaultValues,
     mode: 'onChange',
   })
 
-  function onSubmit(data: SupplierFormValues) {
+  function onSubmit(data: ClientFormValues) {
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -34,11 +37,13 @@ export default function AddProductPage() {
     })
   }
 
+  console.log(id)
+
   return (
     <BaseTemplate>
       <div className='mb-2 flex items-center justify-between space-y-2'>
         <div className='flex w-full justify-between'>
-          <h2 className='text-2xl font-bold tracking-tight'>Novo fornecedor</h2>
+          <h2 className='text-2xl font-bold tracking-tight'>Novo cliente</h2>
         </div>
       </div>
       <Form {...form}>
@@ -49,6 +54,19 @@ export default function AddProductPage() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nome</FormLabel>
+                <FormControl>
+                  <Input placeholder='shadcn' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='document'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Documento</FormLabel>
                 <FormControl>
                   <Input placeholder='shadcn' {...field} />
                 </FormControl>
@@ -70,7 +88,7 @@ export default function AddProductPage() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Informações para contato do fornecedor
+                  Informações para contato do cliente
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -89,7 +107,7 @@ export default function AddProductPage() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Endereço do fornecedor
+                  Endereço do cliente
                 </FormDescription>
                 <FormMessage />
               </FormItem>
