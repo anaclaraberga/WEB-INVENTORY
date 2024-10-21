@@ -11,7 +11,7 @@ import {
   IconUsers
 } from '@tabler/icons-react'
 
-import { Package } from 'lucide-react'
+import { Package, Truck } from 'lucide-react'
 
 export interface NavLink {
   title: string
@@ -36,6 +36,12 @@ export const sidelinks: SideLink[] = [
     label: '',
     href: '/products',
     icon: <Package size={18} />,
+  },
+  {
+    title: 'Fornecedores',
+    label: '',
+    href: '/suppliers',
+    icon: <Truck size={18} />,
   },
   {
     title: 'Tasks',
