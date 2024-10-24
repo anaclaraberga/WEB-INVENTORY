@@ -59,9 +59,9 @@ const router = createBrowserRouter([
         }),
       },
       {
-        path: 'product/add',
+        path: 'product/:id',
         lazy: async () => ({
-          Component: (await import('@/pages/product/add')).default,
+          Component: (await import('@/pages/products/add.tsx')).default,
         }),
       },
       {
@@ -71,11 +71,23 @@ const router = createBrowserRouter([
         }),
       },
       {
-        path: 'supplier/add/:id',
+        path: 'supplier/:id',
         lazy: async () => ({
-          Component: (await import('@/pages/supplier/add')).default,
+          Component: (await import('@/pages/suppliers/add.tsx')).default,
         }),
 
+      },
+      {
+        path: 'clients/:id',
+        lazy: async () => ({
+          Component: (await import('@/pages/clients/add')).default,
+        }),
+      },
+      {
+        path: 'clients/',
+        lazy: async () => ({
+          Component: (await import('@/pages/clients')).default,
+        }),
       },
       {
         path: 'chats',

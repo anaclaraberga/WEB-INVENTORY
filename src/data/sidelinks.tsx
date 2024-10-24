@@ -1,5 +1,4 @@
 import {
-  IconChartHistogram,
   IconChecklist,
   IconHexagonNumber1,
   IconHexagonNumber2,
@@ -7,11 +6,10 @@ import {
   IconHexagonNumber4,
   IconHexagonNumber5,
   IconLayoutDashboard,
-  IconUserShield,
-  IconUsers
+  IconUserShield
 } from '@tabler/icons-react'
 
-import { Package, Truck } from 'lucide-react'
+import { Package, Truck, Users } from 'lucide-react'
 
 export interface NavLink {
   title: string
@@ -42,6 +40,12 @@ export const sidelinks: SideLink[] = [
     label: '',
     href: '/suppliers',
     icon: <Truck size={18} />,
+  },
+  {
+    title: 'Clientes',
+    label: '',
+    href: '/clients',
+    icon: <Users size={18} />,
   },
   {
     title: 'Tasks',
@@ -86,17 +90,5 @@ export const sidelinks: SideLink[] = [
         icon: <IconHexagonNumber5 size={18} />,
       },
     ],
-  },
-  {
-    title: 'Users',
-    label: '',
-    href: '/users',
-    icon: <IconUsers size={18} />,
-  },
-  {
-    title: 'Analysis',
-    label: '',
-    href: '/analysis',
-    icon: <IconChartHistogram size={18} />,
   },
 ]
