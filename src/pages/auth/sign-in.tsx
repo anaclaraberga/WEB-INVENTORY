@@ -1,7 +1,11 @@
 import ViteLogo from '@/assets/vite.svg'
+import { Button } from '@/components/custom/button'
+import { useNavigate } from 'react-router-dom'
 import { UserAuthForm } from './components/user-auth-form'
 
 export default function SignIn() {
+  const navigation = useNavigate()
+
   return (
     <>
       <div className='container relative grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0'>
@@ -25,23 +29,12 @@ export default function SignIn() {
               </p>
             </div>
             <UserAuthForm />
-            <p className='px-8 text-center text-sm text-muted-foreground'>
-              By clicking login, you agree to our{' '}
-              <a
-                href='/terms'
-                className='underline underline-offset-4 hover:text-primary'
-              >
-                Terms of Service
-              </a>{' '}
-              and{' '}
-              <a
-                href='/privacy'
-                className='underline underline-offset-4 hover:text-primary'
-              >
-                Privacy Policy
-              </a>
-              .
+            <p className='px-8 text-center text-sm text-muted-foreground mt-4'>
+              Don't have an account yet?{' '}
             </p>
+            <Button variant="outline" onClick={() => navigation('/sign-up')}>
+              Create account
+            </Button>
           </div>
         </div>
       </div>
