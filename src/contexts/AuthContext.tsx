@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
 export interface User {
-  name: string;
+  name?: string;
   email: string;
+  password: string;
 }
 
 export interface AuthContextType {
@@ -58,8 +59,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
-  const value = { user, isAuthenticated, login, logout };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>{children}</AuthContext.Provider>;
 };
 
