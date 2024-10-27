@@ -16,7 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { defaultValues, supplierFormSchema, SupplierFormValues } from './form-schema'
 
-export default function AddProductPage() {
+export default function AddSupplierPage() {
   const form = useForm<SupplierFormValues>({
     resolver: zodResolver(supplierFormSchema),
     defaultValues,
