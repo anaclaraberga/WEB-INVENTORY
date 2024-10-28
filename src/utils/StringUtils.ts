@@ -17,4 +17,11 @@ export const StringUtils = {
       '$1.$2.$3/$4-$5'
     )
   },
+  getNameInitials(str: string) {
+    return str
+      .split(' ')
+      .slice(0, 2)
+      .map((word) => word.charAt(0).toUpperCase())
+      .join('')
+  },
 }
