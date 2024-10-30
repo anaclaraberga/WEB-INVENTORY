@@ -95,7 +95,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'supplier/:id',
+            path: 'suppliers/:id',
             element: (
               <ProtectedRoute>
                 <AddSupplierPage />
