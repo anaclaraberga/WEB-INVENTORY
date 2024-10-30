@@ -115,7 +115,6 @@ export default function Sidebar({
           className='absolute -right-5 top-1/2 z-50 hidden rounded-full md:inline-flex'
         >
           <ChevronLeft
-            stroke={1.5}
             className={`h-5 w-5 ${isCollapsed ? 'rotate-180' : ''}`}
           />
         </Button>
