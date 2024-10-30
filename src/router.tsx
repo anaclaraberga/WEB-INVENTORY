@@ -1,17 +1,17 @@
 import ProtectedRoute from '@/middlewares/ProtectedRoute.tsx';
+import Clients from '@/pages/admin/clients';
+import AddClientPage from '@/pages/admin/clients/add';
+import Dashboard from '@/pages/admin/dashboard';
+import Products from '@/pages/admin/products';
+import AddProductPage from '@/pages/admin/products/add.tsx';
+import Suppliers from '@/pages/admin/suppliers';
+import AddSupplierPage from '@/pages/admin/suppliers/add.tsx';
 import Apps from '@/pages/apps';
 import Chats from '@/pages/chats';
-import Clients from '@/pages/clients';
-import AddClientPage from '@/pages/clients/add';
 import ExtraComponents from '@/pages/extra-components';
-import Products from '@/pages/products';
-import AddProductPage from '@/pages/products/add.tsx';
-import Suppliers from '@/pages/suppliers';
-import AddSupplierPage from '@/pages/suppliers/add.tsx';
 import Tasks from '@/pages/tasks';
 import { Settings, Users } from 'lucide-react';
 import { createBrowserRouter } from 'react-router-dom';
-import Dashboard from './pages/dashboard';
 import GeneralError from './pages/errors/general-error';
 import MaintenanceError from './pages/errors/maintenance-error';
 import NotFoundError from './pages/errors/not-found-error';
@@ -39,12 +39,6 @@ const router = createBrowserRouter([
     }),
   },
   {
-    path: '/otp',
-    lazy: async () => ({
-      Component: (await import('./pages/auth/otp')).default,
-    }),
-  },
-  {
     path: '/',
     lazy: async () => {
       const AppShell = await import('./components/app-shell');
@@ -53,71 +47,81 @@ const router = createBrowserRouter([
     errorElement: <GeneralError />,
     children: [
       {
-        index: true,
-        element: (
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        ),
+        path: 'admin',
+        lazy: async () => {
+          const AppShell = await import('./components/app-shell');
+          return { Component: AppShell.default };
+        },
+        errorElement: <GeneralError />,
+        children: [
+          {
+            index: true,
+            element: (
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'tasks',
+            element: (
+              <ProtectedRoute>
+                <Tasks />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'products',
+            element: (
+              <ProtectedRoute>
+                <Products />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'product/:id',
+            element: (
+              <ProtectedRoute>
+                <AddProductPage />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'suppliers',
+            element: (
+              <ProtectedRoute>
+                <Suppliers />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'supplier/:id',
+            element: (
+              <ProtectedRoute>
+                <AddSupplierPage />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'clients/:id',
+            element: (
+              <ProtectedRoute>
+                <AddClientPage />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'clients/',
+            element: (
+              <ProtectedRoute>
+                <Clients />
+              </ProtectedRoute>
+            ),
+          },
+        ]
       },
       {
-        path: 'tasks',
-        element: (
-          <ProtectedRoute>
-            <Tasks />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'products',
-        element: (
-          <ProtectedRoute>
-            <Products />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'product/:id',
-        element: (
-          <ProtectedRoute>
-            <AddProductPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'suppliers',
-        element: (
-          <ProtectedRoute>
-            <Suppliers />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'supplier/:id',
-        element: (
-          <ProtectedRoute>
-            <AddSupplierPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'clients/:id',
-        element: (
-          <ProtectedRoute>
-            <AddClientPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'clients/',
-        element: (
-          <ProtectedRoute>
-            <Clients />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: 'chats',
+        path: 'general',
         element: (
           <ProtectedRoute>
             <Chats />

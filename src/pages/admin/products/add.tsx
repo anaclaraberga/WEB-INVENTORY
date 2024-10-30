@@ -181,7 +181,7 @@ export default function AddProductPage() {
               </FormItem>
             )}
           />
-          <Button type='submit'>Save</Button>
+          <Button type='submit'>Salvar</Button>
         </form>
       </Form>
     </BaseTemplate>

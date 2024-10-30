@@ -20,31 +20,31 @@ export const sidelinks: SideLink[] = [
   {
     title: 'Dashboard',
     label: '',
-    href: '/',
+    href: '/admin/dashboard',
     icon: <IconLayoutDashboard size={18} />,
   },
   {
     title: 'Produtos',
     label: '',
-    href: '/products',
+    href: '/admin/products',
     icon: <Package size={18} />,
   },
   {
     title: 'Fornecedores',
     label: '',
-    href: '/suppliers',
+    href: '/admin/suppliers',
     icon: <Truck size={18} />,
   },
   {
     title: 'Clientes',
     label: '',
-    href: '/clients',
+    href: '/admin/clients',
     icon: <Users size={18} />,
   },
   {
     title: 'Tasks',
     label: '3',
-    href: '/tasks',
+    href: '/admin/tasks',
     icon: <IconChecklist size={18} />,
   },
 ]
