@@ -1,17 +1,17 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { IconChevronRight } from '@tabler/icons-react'
-import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { Layout } from '@/components/custom/layout'
 import { Breadcrumb, BreadcrumbItem } from '@/components/custom/breadcrumb'
+import { Layout } from '@/components/custom/layout'
 import { PinInput, PinInputField } from '@/components/custom/pin-input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Separator } from '@/components/ui/separator'
-import { Input } from '@/components/ui/input'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
+import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { UserNav } from '@/components/user-nav'
+import { ChevronRight } from 'lucide-react'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 export default function ExtraComponents() {
   const items = [
@@ -53,7 +53,7 @@ export default function ExtraComponents() {
           </h1>
         </div>
         <h2 className='text-lg font-bold md:text-xl'>Breadcrumbs</h2>
-        <Breadcrumb separator={<IconChevronRight size={18} />}>
+        <Breadcrumb separator={<ChevronRight size={18} />}>
           {items}
         </Breadcrumb>
         <Breadcrumb>{items}</Breadcrumb>
@@ -94,9 +94,9 @@ export default function ExtraComponents() {
                   {`<PinInput
   className='flex h-10 space-x-4'
   defaultValue=''
-  onComplete={(str) => 
+  onComplete={(str) =>
     console.log('completed', str)
-  }  
+  }
   autoFocus
 >
   <PinInputField component={Input} />
@@ -146,7 +146,7 @@ export default function ExtraComponents() {
       className='flex h-10 space-x-4'
       value={pinInput}
       onChange={setPinInput}
-      onComplete={(str) => 
+      onComplete={(str) =>
         console.log('completed', str)
       }
     >

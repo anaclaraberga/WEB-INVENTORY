@@ -1,13 +1,13 @@
-import { cn } from '@/lib/utils'
-import { Link } from 'react-router-dom'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { cn } from '@/lib/utils'
+import { Menu } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Button } from './custom/button'
-import { IconMenu } from '@tabler/icons-react'
 
 interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
   links: {
@@ -24,7 +24,7 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button size='icon' variant='outline'>
-              <IconMenu />
+              <Menu />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side='bottom' align='start'>

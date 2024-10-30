@@ -1,5 +1,8 @@
+import { SideLink } from '@/data/sidelinks'
+import useCheckActiveNav from '@/hooks/use-check-active-nav'
+import { cn } from '@/lib/utils'
+import { ChevronDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { IconChevronDown } from '@tabler/icons-react'
 import { Button, buttonVariants } from './custom/button'
 import {
   Collapsible,
@@ -20,9 +23,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip'
-import { cn } from '@/lib/utils'
-import useCheckActiveNav from '@/hooks/use-check-active-nav'
-import { SideLink } from '@/data/sidelinks'
 
 interface NavProps extends React.HTMLAttributes<HTMLDivElement> {
   isCollapsed: boolean
@@ -141,7 +141,7 @@ function NavLinkDropdown({ title, icon, label, sub, closeNav }: NavLinkProps) {
             'ml-auto transition-all group-data-[state="open"]:-rotate-180'
           )}
         >
-          <IconChevronDown stroke={1} />
+          <ChevronDown stroke="1" />
         </span>
       </CollapsibleTrigger>
       <CollapsibleContent className='collapsibleDropdown' asChild>
@@ -212,7 +212,7 @@ function NavLinkIconDropdown({ title, icon, label, sub }: NavLinkProps) {
           {label && (
             <span className='ml-auto text-muted-foreground'>{label}</span>
           )}
-          <IconChevronDown
+          <ChevronDown
             size={18}
             className='-rotate-90 text-muted-foreground'
           />

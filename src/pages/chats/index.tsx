@@ -1,27 +1,27 @@
-import { useState } from 'react'
-import { Fragment } from 'react/jsx-runtime'
-import dayjs from 'dayjs'
-import {
-  IconArrowLeft,
-  IconDotsVertical,
-  IconEdit,
-  IconMessages,
-  IconPaperclip,
-  IconPhone,
-  IconPhotoPlus,
-  IconPlus,
-  IconSearch,
-  IconSend,
-  IconVideo,
-} from '@tabler/icons-react'
-import { cn } from '@/lib/utils'
-import { Separator } from '@/components/ui/separator'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/custom/button'
 import { Layout } from '@/components/custom/layout'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Separator } from '@/components/ui/separator'
 import { UserNav } from '@/components/user-nav'
-import { Button } from '@/components/custom/button'
+import { cn } from '@/lib/utils'
+import dayjs from 'dayjs'
+import {
+  ArrowLeft,
+  Edit,
+  EllipsisVertical,
+  ImagePlus,
+  MessageSquare,
+  Paperclip,
+  Phone,
+  Plus,
+  Search as SearchIcon,
+  Send,
+  Video,
+} from 'lucide-react'
+import { useState } from 'react'
+import { Fragment } from 'react/jsx-runtime'
 
 // Fake Data
 import { conversations } from '@/data/conversations.json'
@@ -77,16 +77,16 @@ export default function Chats() {
               <div className='flex items-center justify-between py-2'>
                 <div className='flex gap-2'>
                   <h1 className='text-2xl font-bold'>Inbox</h1>
-                  <IconMessages size={20} />
+                  <MessageSquare size={20} />
                 </div>
 
                 <Button size='icon' variant='ghost' className='rounded-lg'>
-                  <IconEdit size={24} className='stroke-muted-foreground' />
+                  <Edit size={24} className='stroke-muted-foreground' />
                 </Button>
               </div>
 
               <label className='flex h-12 w-full items-center space-x-0 rounded-md border border-input pl-2 focus-within:outline-none focus-within:ring-1 focus-within:ring-ring'>
-                <IconSearch size={15} className='mr-2 stroke-slate-500' />
+                <SearchIcon size={15} className='mr-2 stroke-slate-500' />
                 <span className='sr-only'>Search</span>
                 <input
                   type='text'
@@ -158,7 +158,7 @@ export default function Chats() {
                   className='-ml-2 h-full sm:hidden'
                   onClick={() => setMobileSelectedUser(null)}
                 >
-                  <IconArrowLeft />
+                  <ArrowLeft />
                 </Button>
                 <div className='flex items-center gap-2 lg:gap-4'>
                   <Avatar className='size-9 lg:size-11'>
@@ -186,21 +186,21 @@ export default function Chats() {
                   variant='ghost'
                   className='hidden size-8 rounded-full sm:inline-flex lg:size-10'
                 >
-                  <IconVideo size={22} className='stroke-muted-foreground' />
+                  <Video size={22} className='stroke-muted-foreground' />
                 </Button>
                 <Button
                   size='icon'
                   variant='ghost'
                   className='hidden size-8 rounded-full sm:inline-flex lg:size-10'
                 >
-                  <IconPhone size={22} className='stroke-muted-foreground' />
+                  <Phone size={22} className='stroke-muted-foreground' />
                 </Button>
                 <Button
                   size='icon'
                   variant='ghost'
                   className='h-10 rounded-md sm:h-8 sm:w-4 lg:h-10 lg:w-6'
                 >
-                  <IconDotsVertical className='stroke-muted-foreground sm:size-5' />
+                  <EllipsisVertical className='stroke-muted-foreground sm:size-5' />
                 </Button>
               </div>
             </div>
@@ -249,7 +249,7 @@ export default function Chats() {
                       variant='ghost'
                       className='h-8 rounded-md'
                     >
-                      <IconPlus size={20} className='stroke-muted-foreground' />
+                      <Plus size={20} className='stroke-muted-foreground' />
                     </Button>
                     <Button
                       size='icon'
@@ -257,7 +257,7 @@ export default function Chats() {
                       variant='ghost'
                       className='hidden h-8 rounded-md lg:inline-flex'
                     >
-                      <IconPhotoPlus
+                      <ImagePlus
                         size={20}
                         className='stroke-muted-foreground'
                       />
@@ -268,7 +268,7 @@ export default function Chats() {
                       variant='ghost'
                       className='hidden h-8 rounded-md lg:inline-flex'
                     >
-                      <IconPaperclip
+                      <Paperclip
                         size={20}
                         className='stroke-muted-foreground'
                       />
@@ -287,12 +287,12 @@ export default function Chats() {
                     size='icon'
                     className='hidden sm:inline-flex'
                   >
-                    <IconSend size={20} />
+                    <Send size={20} />
                   </Button>
                 </div>
                 <Button
                   className='h-full sm:hidden'
-                  rightSection={<IconSend size={18} />}
+                  rightSection={<Send size={18} />}
                 >
                   Send
                 </Button>

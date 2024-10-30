@@ -1,8 +1,8 @@
-import * as React from 'react'
-import { Slot } from '@radix-ui/react-slot'
-import { IconLoader2 } from '@tabler/icons-react'
-import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { ShipWheel } from 'lucide-react'
+import * as React from 'react'
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
@@ -81,13 +81,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {((leftSection && loading) ||
           (!leftSection && !rightSection && loading)) && (
-          <IconLoader2 className='mr-2 h-4 w-4 animate-spin' />
+          <ShipWheel className='mr-2 h-4 w-4 animate-spin' />
         )}
         {!loading && leftSection && <div className='mr-2'>{leftSection}</div>}
         {children}
         {!loading && rightSection && <div className='ml-2'>{rightSection}</div>}
         {rightSection && loading && (
-          <IconLoader2 className='ml-2 h-4 w-4 animate-spin' />
+          <ShipWheel className='ml-2 h-4 w-4 animate-spin' />
         )}
       </button>
     )
@@ -97,3 +97,4 @@ Button.displayName = 'Button'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export { Button, buttonVariants }
+

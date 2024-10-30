@@ -1,9 +1,5 @@
-import {
-  IconChecklist,
-  IconLayoutDashboard
-} from '@tabler/icons-react'
 
-import { Package, Truck, Users } from 'lucide-react'
+import { LayoutDashboard, Package, Truck, Users } from 'lucide-react'
 
 export interface NavLink {
   title: string
@@ -21,7 +17,7 @@ export const sidelinks: SideLink[] = [
     title: 'Dashboard',
     label: '',
     href: '/admin/dashboard',
-    icon: <IconLayoutDashboard size={18} />,
+    icon: <LayoutDashboard size={18} />,
   },
   {
     title: 'Produtos',
@@ -40,11 +36,5 @@ export const sidelinks: SideLink[] = [
     label: '',
     href: '/admin/clients',
     icon: <Users size={18} />,
-  },
-  {
-    title: 'Tasks',
-    label: '3',
-    href: '/admin/tasks',
-    icon: <IconChecklist size={18} />,
   },
 ]

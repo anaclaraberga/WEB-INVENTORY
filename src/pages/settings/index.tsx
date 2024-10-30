@@ -1,17 +1,17 @@
-import { Outlet } from 'react-router-dom'
-import {
-  IconBrowserCheck,
-  IconExclamationCircle,
-  IconNotification,
-  IconPalette,
-  IconTool,
-  IconUser,
-} from '@tabler/icons-react'
 import { Layout } from '@/components/custom/layout'
 import { Search } from '@/components/search'
-import { Separator } from '@/components/ui/separator'
 import ThemeSwitch from '@/components/theme-switch'
+import { Separator } from '@/components/ui/separator'
 import { UserNav } from '@/components/user-nav'
+import {
+  Bell,
+  Check,
+  CircleAlert,
+  Palette,
+  User,
+  Wrench,
+} from 'lucide-react'
+import { Outlet } from 'react-router-dom'
 import SidebarNav from './components/sidebar-nav'
 
 export default function Settings() {
@@ -52,32 +52,32 @@ export default function Settings() {
 const sidebarNavItems = [
   {
     title: 'Profile',
-    icon: <IconUser size={18} />,
+    icon: <User size={18} />,
     href: '/settings',
   },
   {
     title: 'Account',
-    icon: <IconTool size={18} />,
+    icon: <Wrench size={18} />,
     href: '/settings/account',
   },
   {
     title: 'Appearance',
-    icon: <IconPalette size={18} />,
+    icon: <Palette size={18} />,
     href: '/settings/appearance',
   },
   {
     title: 'Notifications',
-    icon: <IconNotification size={18} />,
+    icon: <Bell size={18} />,
     href: '/settings/notifications',
   },
   {
     title: 'Display',
-    icon: <IconBrowserCheck size={18} />,
+    icon: <Check size={18} />,
     href: '/settings/display',
   },
   {
     title: 'Error Example',
-    icon: <IconExclamationCircle size={18} />,
+    icon: <CircleAlert size={18} />,
     href: '/settings/error-example',
   },
 ]

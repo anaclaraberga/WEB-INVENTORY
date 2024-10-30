@@ -49,16 +49,18 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    login(data)
 
-    if (isAuthenticated) {
-      navigate("/")
-      return
-    }
-
-    setTimeout(() => {
+    try {
+      login(data)
+      if (isAuthenticated) {
+        navigate("/admin/")
+        return
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
       setIsLoading(false)
-    }, 3000)
+    }
   }
 
   return (
