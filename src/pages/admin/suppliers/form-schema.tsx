@@ -1,6 +1,10 @@
 import { z } from "zod"
 
 export const supplierFormSchema = z.object({
+  id: z
+    .number({ required_error: "O fornecedor precisa ter um meio de contato" })
+    .optional()
+    .nullable(),
   name: z
     .string({ required_error: "O fornecedor precisa ter um nome" })
     .min(3, {
@@ -21,6 +25,7 @@ export const supplierFormSchema = z.object({
 export type SupplierFormValues = z.infer<typeof supplierFormSchema>
 
 export const defaultValues: Partial<SupplierFormValues> = {
+  id: null,
   name: '',
   contact: '',
   address: ''

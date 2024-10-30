@@ -1,9 +1,5 @@
-import { HTMLAttributes, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
+import { Button } from '@/components/custom/button'
+import { PasswordInput } from '@/components/custom/password-input'
 import {
   Form,
   FormControl,
@@ -13,11 +9,15 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/custom/button'
-import { PasswordInput } from '@/components/custom/password-input'
+import { useAuth } from '@/hooks/use-auth'
 import { cn } from '@/lib/utils'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { HTMLAttributes, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { z } from 'zod'
 
-interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> { }
 
 const formSchema = z.object({
   email: z
@@ -36,6 +36,8 @@ const formSchema = z.object({
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const { login, isAuthenticated } = useAuth()
+  const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,7 +49,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    console.log(data)
+    login(data)
+
+    if (isAuthenticated) {
+      navigate("/")
+      return
+    }
 
     setTimeout(() => {
       setIsLoading(false)
@@ -97,7 +104,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               Login
             </Button>
 
-            <div className='relative my-2'>
+            {/* <div className='relative my-2'>
               <div className='absolute inset-0 flex items-center'>
                 <span className='w-full border-t' />
               </div>
@@ -127,7 +134,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               >
                 Facebook
               </Button>
-            </div>
+            </div> */}
           </div>
         </form>
       </Form>

@@ -1,12 +1,6 @@
 import {
   IconChecklist,
-  IconHexagonNumber1,
-  IconHexagonNumber2,
-  IconHexagonNumber3,
-  IconHexagonNumber4,
-  IconHexagonNumber5,
-  IconLayoutDashboard,
-  IconUserShield
+  IconLayoutDashboard
 } from '@tabler/icons-react'
 
 import { Package, Truck, Users } from 'lucide-react'
@@ -26,69 +20,31 @@ export const sidelinks: SideLink[] = [
   {
     title: 'Dashboard',
     label: '',
-    href: '/',
+    href: '/admin/dashboard',
     icon: <IconLayoutDashboard size={18} />,
   },
   {
     title: 'Produtos',
     label: '',
-    href: '/products',
+    href: '/admin/products',
     icon: <Package size={18} />,
   },
   {
     title: 'Fornecedores',
     label: '',
-    href: '/suppliers',
+    href: '/admin/suppliers',
     icon: <Truck size={18} />,
   },
   {
     title: 'Clientes',
     label: '',
-    href: '/clients',
+    href: '/admin/clients',
     icon: <Users size={18} />,
   },
   {
     title: 'Tasks',
     label: '3',
-    href: '/tasks',
+    href: '/admin/tasks',
     icon: <IconChecklist size={18} />,
-  },
-  {
-    title: 'Authentication',
-    label: '',
-    href: '',
-    icon: <IconUserShield size={18} />,
-    sub: [
-      {
-        title: 'Sign In (email + password)',
-        label: '',
-        href: '/sign-in',
-        icon: <IconHexagonNumber1 size={18} />,
-      },
-      {
-        title: 'Sign In (Box)',
-        label: '',
-        href: '/sign-in-2',
-        icon: <IconHexagonNumber2 size={18} />,
-      },
-      {
-        title: 'Sign Up',
-        label: '',
-        href: '/sign-up',
-        icon: <IconHexagonNumber3 size={18} />,
-      },
-      {
-        title: 'Forgot Password',
-        label: '',
-        href: '/forgot-password',
-        icon: <IconHexagonNumber4 size={18} />,
-      },
-      {
-        title: 'OTP',
-        label: '',
-        href: '/otp',
-        icon: <IconHexagonNumber5 size={18} />,
-      },
-    ],
   },
 ]

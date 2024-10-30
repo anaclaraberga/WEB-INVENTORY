@@ -1,3 +1,4 @@
+import { SupplierService } from '@/api/services/supplier'
 import { Button } from '@/components/custom/button'
 import {
   Form,
@@ -13,20 +14,35 @@ import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
-import { clientFormSchema, ClientFormValues, defaultValues } from './form-schema'
+import { defaultValues, supplierFormSchema, SupplierFormValues } from './form-schema'
 
-export default function AddClientPage() {
+export default function AddSupplierPage() {
   const { id } = useParams()
+  let formValues
 
-  const form = useForm<ClientFormValues>({
-    resolver: zodResolver(clientFormSchema),
-    defaultValues,
+  useEffect(() => {
+    if (id) {
+      SupplierService
+        .findById(id)
+        .then(response => {
+          formValues = { ...defaultValues, ...response }
+        })
+        .catch(error => console.log(error))
+    } else {
+      formValues = defaultValues
+    }
+  }, [id])
+
+  const form = useForm<SupplierFormValues>({
+    resolver: zodResolver(supplierFormSchema),
+    defaultValues: formValues,
     mode: 'onChange',
   })
 
-  function onSubmit(data: ClientFormValues) {
+  function onSubmit(data: SupplierFormValues) {
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -37,13 +53,11 @@ export default function AddClientPage() {
     })
   }
 
-  console.log(id)
-
   return (
     <BaseTemplate>
       <div className='mb-2 flex items-center justify-between space-y-2'>
         <div className='flex w-full justify-between'>
-          <h2 className='text-2xl font-bold tracking-tight'>Novo cliente</h2>
+          <h2 className='text-2xl font-bold tracking-tight'>Novo fornecedor</h2>
         </div>
       </div>
       <Form {...form}>
@@ -54,19 +68,6 @@ export default function AddClientPage() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nome</FormLabel>
-                <FormControl>
-                  <Input placeholder='shadcn' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='document'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Documento</FormLabel>
                 <FormControl>
                   <Input placeholder='shadcn' {...field} />
                 </FormControl>
@@ -88,7 +89,7 @@ export default function AddClientPage() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Informações para contato do cliente
+                  Informações para contato do fornecedor
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -107,13 +108,13 @@ export default function AddClientPage() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Endereço do cliente
+                  Endereço do fornecedor
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type='submit'>Save</Button>
+          <Button type='submit'>Salvar</Button>
         </form>
       </Form>
     </BaseTemplate>
