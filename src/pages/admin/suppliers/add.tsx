@@ -1,4 +1,4 @@
-import { SupplierService } from '@/api/services/supplier'
+import { SupplierService } from '@/api/services/supplier-service'
 import { Button } from '@/components/custom/button'
 import {
   Form,

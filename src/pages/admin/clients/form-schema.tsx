@@ -1,6 +1,10 @@
 import { z } from "zod"
 
 export const clientFormSchema = z.object({
+  id: z
+    .number()
+    .optional()
+    .nullable(),
   name: z
     .string({ required_error: "O client precisa ter um nome" })
     .min(3, {
@@ -25,7 +29,9 @@ export const clientFormSchema = z.object({
 export type ClientFormValues = z.infer<typeof clientFormSchema>
 
 export const defaultValues: Partial<ClientFormValues> = {
+  id: null,
   name: '',
+  document: '',
   contact: '',
   address: ''
 }
