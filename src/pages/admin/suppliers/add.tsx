@@ -1,3 +1,4 @@
+import { SupplierService } from '@/api/services/supplier'
 import { Button } from '@/components/custom/button'
 import {
   Form,
@@ -13,13 +14,31 @@ import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 import { defaultValues, supplierFormSchema, SupplierFormValues } from './form-schema'
 
 export default function AddSupplierPage() {
+  const { id } = useParams()
+  let formValues
+
+  useEffect(() => {
+    if (id) {
+      SupplierService
+        .findById(id)
+        .then(response => {
+          formValues = { ...defaultValues, ...response }
+        })
+        .catch(error => console.log(error))
+    } else {
+      formValues = defaultValues
+    }
+  }, [id])
+
   const form = useForm<SupplierFormValues>({
     resolver: zodResolver(supplierFormSchema),
-    defaultValues,
+    defaultValues: formValues,
     mode: 'onChange',
   })
 
