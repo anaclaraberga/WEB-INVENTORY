@@ -6,6 +6,7 @@ import {
   Routes
 } from 'react-router-dom';
 import AppShell from './components/app-shell.tsx';
+import Loader from './components/loader.tsx';
 import AddClientPage from './pages/admin/clients/add.tsx';
 import Clients from './pages/admin/clients/index.tsx';
 import Dashboard from './pages/admin/dashboard/index.tsx';
@@ -50,7 +51,7 @@ import Tasks from './pages/tasks/index.tsx';
 
 const AppRouter = () => (
   <Router>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
