@@ -1,27 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table'
 
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
-import { DataTableRowActions, DropdownOption } from '@/components/data-table/data-table-row-actions'
 import { Checkbox } from '@/components/ui/checkbox'
 
 import { DataTableToolbarConfig } from '@/components/data-table/data-table-toolbar'
-import { SupplierSchema, supplierSchema } from './schema'
-
-export const rowActionsOptions: DropdownOption[] = [
-  {
-    type: 'item',
-    value: 'edit',
-    label: 'Edit',
-    onClick: () => console.log('Edited')
-  },
-  {
-    type: 'item',
-    value: 'delete',
-    label: 'Delete',
-    className: '!text-red-500 hover:text-red-500',
-    onClick: () => console.log('Deleted')
-  },
-]
+import { SupplierSchema } from './schema'
 
 export const columns: ColumnDef<SupplierSchema>[] = [
   {
@@ -110,10 +93,6 @@ export const columns: ColumnDef<SupplierSchema>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     }
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} schema={supplierSchema} options={rowActionsOptions} />,
   },
 ]
 

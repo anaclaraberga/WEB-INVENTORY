@@ -17,7 +17,7 @@ export interface DropdownOption {
   value: string,
   type: 'item' | 'sub',
   options?: DropdownOption[]
-  onClick?: () => void,
+  onClick?: (row: any) => void,
   className?: string
 }
 
@@ -37,7 +37,7 @@ export function DataTableRowActions<TData>({
   const renderDropdownOption = (option: DropdownOption) => {
     if (option.type == 'item') {
       return (
-        <DropdownMenuItem key={option.value} onClick={option.onClick} className={option.className}>
+        <DropdownMenuItem key={option.value} onClick={() => option.onClick?.(row.original)} className={option.className}>
           {option.label}
         </DropdownMenuItem>
       )
