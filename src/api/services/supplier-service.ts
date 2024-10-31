@@ -1,11 +1,13 @@
 import { SupplierFormValues } from '@/pages/admin/suppliers/form-schema'
 import apiClient from '../client/api'
-import { SupplierMapper } from '../mappers/supplier-mapper'
+import { SupplierMapper, SupplierResponseDTO } from '../mappers/supplier-mapper'
 
 export const SupplierService = {
   findAll: async () => {
     const response = await apiClient.get('/supplier')
-    return SupplierMapper.toDomain(response.data)
+    return response.data.map((element: SupplierResponseDTO) => {
+      return SupplierMapper.toDomain(element)
+    })
   },
   findById: async (id: string | number) => {
     const response = await apiClient.get(`/supplier/${id}`)
