@@ -14,6 +14,8 @@ import AddProductPage from './pages/admin/products/add.tsx';
 import Products from './pages/admin/products/index.tsx';
 import AddSupplierPage from './pages/admin/suppliers/add.tsx';
 import Supplier from './pages/admin/suppliers/index.tsx';
+import AddUserPage from './pages/admin/users/add.tsx';
+import Users from './pages/admin/users/index.tsx';
 import ForgotPassword from './pages/auth/forgot-password.tsx';
 import SignIn from './pages/auth/sign-in.tsx';
 import SignUp from './pages/auth/sign-up.tsx';
@@ -67,6 +69,8 @@ const AppRouter = () => (
             <Route path="suppliers/:id" element={<ProtectedRoute><AddSupplierPage /></ProtectedRoute>} />
             <Route path="clients" element={<ProtectedRoute><Clients /></ProtectedRoute>} />
             <Route path="clients/:id" element={<ProtectedRoute><AddClientPage /></ProtectedRoute>} />
+            <Route path="users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+            <Route path="users/:id" element={<ProtectedRoute><AddUserPage /></ProtectedRoute>} />
           </Route>
           <Route path="general" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
           {/* <Route path="users" element={<ProtectedRoute><Users /></ProtectedRoute>} /> */}

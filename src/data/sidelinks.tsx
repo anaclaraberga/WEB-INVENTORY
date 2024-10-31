@@ -27,7 +27,7 @@ export const sidelinks: SideLink[] = [
   },
   {
     title: 'Fornecedores',
-    label: '',
+    label: 'OK',
     href: '/admin/suppliers',
     icon: <Truck size={18} />,
   },
@@ -35,6 +35,12 @@ export const sidelinks: SideLink[] = [
     title: 'Clientes',
     label: '',
     href: '/admin/clients',
+    icon: <Users size={18} />,
+  },
+  {
+    title: 'Usuários',
+    label: 'OK',
+    href: '/admin/users',
     icon: <Users size={18} />,
   },
 ]

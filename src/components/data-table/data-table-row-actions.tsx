@@ -32,12 +32,11 @@ export function DataTableRowActions<TData>({
   options,
   schema
 }: DataTableRowActionsProps<TData>) {
-  const item = schema.parse(row.original)
 
   const renderDropdownOption = (option: DropdownOption) => {
     if (option.type == 'item') {
       return (
-        <DropdownMenuItem key={option.value} onClick={() => option.onClick?.(row.original)} className={option.className}>
+        <DropdownMenuItem key={option.value + 1} onClick={() => option.onClick?.(row.original)} className={option.className}>
           {option.label}
         </DropdownMenuItem>
       )
