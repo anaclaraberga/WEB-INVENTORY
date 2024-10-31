@@ -44,7 +44,17 @@ export default function Supplier() {
           value: 'delete',
           label: 'Delete',
           className: '!text-red-500 hover:text-red-500',
-          onClick: (row) => { console.log(row) }
+          onClick: async (row) => {
+            try {
+              await SupplierService.delete(row.id)
+              location.reload()
+            } catch (error: any) {
+              toast({
+                title: 'Error deleting supplier',
+                description: error.message,
+              })
+            }
+          }
         },
       ]} />),
     },
