@@ -1,3 +1,4 @@
+import { UserService } from '@/api/services/user-service'
 import { Button } from '@/components/custom/button'
 import {
   Form,
@@ -12,29 +13,45 @@ import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { UserFormValues, defaultValues, userFormSchema } from './form-schema'
 
 export default function AddUserPage() {
   const { id } = useParams()
+  const [formValues, setFormValues] = useState<UserFormValues>(defaultValues)
 
   const form = useForm<UserFormValues>({
     resolver: zodResolver(userFormSchema),
-    defaultValues,
+    defaultValues: formValues,
+    values: formValues,
     mode: 'onChange',
   })
 
-  function onSubmit(data: UserFormValues) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data: UserFormValues) {
+    try {
+      await UserService.create(data)
+
+      toast({
+        title: 'User created successfully',
+      })
+    } catch (error: any) {
+      toast({
+        title: 'Error creating supplier',
+        description: error.message,
+      })
+    }
   }
+
+  useEffect(() => {
+    (async () => {
+      if (id) {
+        const response = await UserService.findById(id)
+        setFormValues({ ...response })
+      }
+    })()
+  }, [])
 
   return (
     <BaseTemplate>
@@ -78,7 +95,7 @@ export default function AddUserPage() {
               <FormItem>
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} type='password'/>
+                  <Input placeholder='shadcn' {...field} type='password' />
                 </FormControl>
                 <FormDescription>
                   Senha de acesso
@@ -94,7 +111,7 @@ export default function AddUserPage() {
               <FormItem>
                 <FormLabel>Confirme sua senha</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} type='password'/>
+                  <Input placeholder='shadcn' {...field} type='password' />
                 </FormControl>
                 <FormDescription>
                   Senha de acesso
