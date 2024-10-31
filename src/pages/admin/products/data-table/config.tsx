@@ -102,22 +102,5 @@ export const columns: ColumnDef<ProductSchema>[] = [
 export const toolbar: DataTableToolbarConfig = {
   placeholder: 'Filtrar produtos...',
   searchKey: 'name',
-  filters: [{
-    key: 'price',
-    title: 'Preço',
-    options: [
-      {
-        label: '< 50',
-        value: '50'
-      },
-      {
-        label: '< 100',
-        value: '100'
-      },
-      {
-        label: '< 300',
-        value: '300'
-      }
-    ]
-  }]
+  filters: []
 }
