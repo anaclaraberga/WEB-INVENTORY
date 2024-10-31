@@ -3,7 +3,8 @@ import { DataTable } from '@/components/data-table/data-table'
 import { BaseTemplate } from '@/template/Base'
 import { useNavigate } from 'react-router-dom'
 import { columns, toolbar } from './data-table/config'
-import { data } from './data-table/data'
+
+const data: any = []
 
 export default function Products() {
   const navigation = useNavigate()
