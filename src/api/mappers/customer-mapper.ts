@@ -14,8 +14,8 @@ export const CustomerMapper = {
     return {
       id: response.id as number,
       name: response.name,
-      document: response.name,
-      contact: response.nationalRegistry,
+      document: response.nationalRegistry,
+      contact: response.email,
       address: response.zipCode,
     }
   },
