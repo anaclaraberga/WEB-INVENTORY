@@ -1,12 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table'
 
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
-import { DataTableRowActions, DropdownOption } from '@/components/data-table/data-table-row-actions'
-import { Checkbox } from '@/components/ui/checkbox'
+import { DropdownOption } from '@/components/data-table/data-table-row-actions'
 
 import { DataTableToolbarConfig } from '@/components/data-table/data-table-toolbar'
 import { StringUtils } from '@/utils/StringUtils'
-import { ClientSchema, clientSchema } from './schema'
+import { ClientSchema } from './schema'
 
 export const rowActionsOptions: DropdownOption[] = [
   {
@@ -25,30 +24,6 @@ export const rowActionsOptions: DropdownOption[] = [
 ]
 
 export const columns: ColumnDef<ClientSchema>[] = [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label='Select all'
-        className='translate-y-[2px]'
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label='Select row'
-        className='translate-y-[2px]'
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: 'id',
     header: ({ column }) => (
@@ -123,10 +98,6 @@ export const columns: ColumnDef<ClientSchema>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     }
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} schema={clientSchema} options={rowActionsOptions} />,
   },
 ]
 
