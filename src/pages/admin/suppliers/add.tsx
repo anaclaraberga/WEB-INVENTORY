@@ -16,21 +16,28 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
-import { defaultValues, supplierFormSchema, SupplierFormValues } from './form-schema'
+import { supplierFormSchema, SupplierFormValues } from './form-schema'
 
 export default function AddSupplierPage() {
   const { id } = useParams()
-  const [formValues, setFormValues] = useState(defaultValues)
+  const [formValues, setFormValues] = useState<SupplierFormValues>({
+    id: null,
+    name: '',
+    contact: '',
+    address: ''
+  })
 
   const form = useForm<SupplierFormValues>({
     resolver: zodResolver(supplierFormSchema),
     defaultValues: formValues,
+    values: formValues,
     mode: 'onChange',
   })
 
   async function onSubmit(data: SupplierFormValues) {
     try {
-      const response = await SupplierService.create(data)
+      await SupplierService.create(data)
+
       toast({
         title: 'Supplier created successfully',
       })
@@ -47,10 +54,9 @@ export default function AddSupplierPage() {
       if (id) {
         const response = await SupplierService.findById(id)
         setFormValues({ ...response })
-        form.formState.defaultValues = formValues
       }
     })()
-  }, [id])
+  }, [])
 
   return (
     <BaseTemplate>
@@ -64,15 +70,18 @@ export default function AddSupplierPage() {
           <FormField
             control={form.control}
             name='name'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nome</FormLabel>
-                <FormControl>
-                  <Input placeholder='shadcn' {...field} defaultValue={field.value} value={field.value} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+
+              return (
+                <FormItem>
+                  <FormLabel>Nome</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder='shadcn' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
           />
           <FormField
             control={form.control}
