@@ -37,7 +37,7 @@ export const columns: ColumnDef<SupplierSchema>[] = [
       <DataTableColumnHeader column={column} title='Id' />
     ),
     cell: ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>,
-    enableSorting: false,
+    enableSorting: true,
     enableHiding: false,
   },
   {

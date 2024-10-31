@@ -10,31 +10,17 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { defaultValues, supplierFormSchema, SupplierFormValues } from './form-schema'
 
 export default function AddSupplierPage() {
   const { id } = useParams()
-  let formValues
-
-  useEffect(() => {
-    if (id) {
-      SupplierService
-        .findById(id)
-        .then(response => {
-          formValues = { ...defaultValues, ...response }
-        })
-        .catch(error => console.log(error))
-    } else {
-      formValues = defaultValues
-    }
-  }, [id])
+  const [formValues, setFormValues] = useState(defaultValues)
 
   const form = useForm<SupplierFormValues>({
     resolver: zodResolver(supplierFormSchema),
@@ -42,16 +28,29 @@ export default function AddSupplierPage() {
     mode: 'onChange',
   })
 
-  function onSubmit(data: SupplierFormValues) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data: SupplierFormValues) {
+    try {
+      const response = await SupplierService.create(data)
+      toast({
+        title: 'Supplier created successfully',
+      })
+    } catch (error: any) {
+      toast({
+        title: 'Error creating supplier',
+        description: error.message,
+      })
+    }
   }
+
+  useEffect(() => {
+    (async () => {
+      if (id) {
+        const response = await SupplierService.findById(id)
+        setFormValues({ ...response })
+        form.formState.defaultValues = formValues
+      }
+    })()
+  }, [id])
 
   return (
     <BaseTemplate>
@@ -61,7 +60,7 @@ export default function AddSupplierPage() {
         </div>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+        <form onSubmit={form.handleSubmit(async (e) => await onSubmit(e))} className='space-y-8'>
           <FormField
             control={form.control}
             name='name'
@@ -69,7 +68,7 @@ export default function AddSupplierPage() {
               <FormItem>
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} />
+                  <Input placeholder='shadcn' {...field} defaultValue={field.value} value={field.value} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -82,9 +81,8 @@ export default function AddSupplierPage() {
               <FormItem>
                 <FormLabel>Contato</FormLabel>
                 <FormControl>
-                  <Textarea
+                  <Input
                     placeholder='+55 (45) 98765-4321'
-                    className='resize-none'
                     {...field}
                   />
                 </FormControl>
