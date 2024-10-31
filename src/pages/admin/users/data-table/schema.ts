@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-export const clientSchema = z.object({
+export const userSchema = z.object({
   id: z.string(),
   name: z.string(),
-  document: z.string(),
-  contact: z.string(),
-  address: z.string(),
+  email: z.string(),
+  password: z.string(),
+  confirm: z.string(),
 })
 
-export type ClientSchema = z.infer<typeof clientSchema>
+export type UserSchema = z.infer<typeof userSchema>

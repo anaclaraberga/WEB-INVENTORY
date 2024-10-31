@@ -1,12 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table'
 
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
-import { DataTableRowActions, DropdownOption } from '@/components/data-table/data-table-row-actions'
+import { DropdownOption } from '@/components/data-table/data-table-row-actions'
 import { Checkbox } from '@/components/ui/checkbox'
 
 import { DataTableToolbarConfig } from '@/components/data-table/data-table-toolbar'
-import { StringUtils } from '@/utils/StringUtils'
-import { ClientSchema, clientSchema } from './schema'
+import { UserSchema } from './schema'
 
 export const rowActionsOptions: DropdownOption[] = [
   {
@@ -24,7 +23,7 @@ export const rowActionsOptions: DropdownOption[] = [
   },
 ]
 
-export const columns: ColumnDef<ClientSchema>[] = [
+export const columns: ColumnDef<UserSchema>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -74,64 +73,24 @@ export const columns: ColumnDef<ClientSchema>[] = [
     },
   },
   {
-    accessorKey: 'document',
+    accessorKey: 'email',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Documento' />
+      <DataTableColumnHeader column={column} title='Email' />
     ),
     cell: ({ row }) => {
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {StringUtils.formatDocument(row.getValue('document'))}
+            {row.getValue('email')}
           </span>
         </div>
       )
     },
-  },
-  {
-    accessorKey: 'contact',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Contato' />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('contact')}
-          </span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    }
-  },
-  {
-    accessorKey: 'address',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Endereço' />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('address')}
-          </span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    }
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} schema={clientSchema} options={rowActionsOptions} />,
   },
 ]
 
 export const toolbar: DataTableToolbarConfig = {
-  placeholder: 'Filtrar clientes...',
+  placeholder: 'Filtrar usuarios...',
   searchKey: 'name',
   filters: [],
 }
