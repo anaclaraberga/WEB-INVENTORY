@@ -3,9 +3,10 @@ import { ClientFormValues } from '@/pages/admin/clients/form-schema'
 export interface CustomerResponseDTO {
   id: string | number | null
   name: string
-  contact: string
-  document: string
-  address: string
+  email: string
+  phone: string
+  nationalRegistry: string
+  zipCode: string
 }
 
 export const CustomerMapper = {
@@ -14,17 +15,18 @@ export const CustomerMapper = {
       id: response.id as number,
       name: response.name,
       document: response.name,
-      contact: response.contact,
-      address: response.contact,
+      contact: response.nationalRegistry,
+      address: response.zipCode,
     }
   },
   toRequest: (domain: ClientFormValues): CustomerResponseDTO => {
     return {
       id: domain.id as number,
       name: domain.name,
-      document: domain.name,
-      contact: domain.contact,
-      address: domain.contact,
+      nationalRegistry: domain.document,
+      email: domain.contact,
+      phone: domain.contact,
+      zipCode: domain.contact,
     }
   },
 }
