@@ -1,3 +1,4 @@
+import { CustomerService } from '@/api/services/customer-service'
 import { Button } from '@/components/custom/button'
 import {
   Form,
@@ -9,10 +10,10 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { clientFormSchema, ClientFormValues, defaultValues } from './form-schema'
@@ -20,24 +21,38 @@ import { clientFormSchema, ClientFormValues, defaultValues } from './form-schema
 export default function AddClientPage() {
   const { id } = useParams()
 
+  const [formValues, setFormValues] = useState(defaultValues)
+
   const form = useForm<ClientFormValues>({
     resolver: zodResolver(clientFormSchema),
-    defaultValues,
+    defaultValues: formValues,
+    values: formValues,
     mode: 'onChange',
   })
 
-  function onSubmit(data: ClientFormValues) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data: ClientFormValues) {
+    try {
+      await CustomerService.create(data)
+
+      toast({
+        title: 'Client created successfully',
+      })
+    } catch (error: any) {
+      toast({
+        title: 'Error creating supplier',
+        description: error.message,
+      })
+    }
   }
 
-  console.log(id)
+  useEffect(() => {
+    (async () => {
+      if (id) {
+        const response = await CustomerService.findById(id)
+        setFormValues({ ...response })
+      }
+    })()
+  }, [])
 
   return (
     <BaseTemplate>
@@ -81,11 +96,7 @@ export default function AddClientPage() {
               <FormItem>
                 <FormLabel>Contato</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder='+55 (45) 98765-4321'
-                    className='resize-none'
-                    {...field}
-                  />
+                  <Input {...field} />
                 </FormControl>
                 <FormDescription>
                   Informações para contato do cliente
