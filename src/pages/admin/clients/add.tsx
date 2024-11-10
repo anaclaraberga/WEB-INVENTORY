@@ -70,7 +70,7 @@ export default function AddClientPage() {
               <FormItem>
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -83,7 +83,7 @@ export default function AddClientPage() {
               <FormItem>
                 <FormLabel>Documento</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -113,7 +113,6 @@ export default function AddClientPage() {
                 <FormLabel>Endereço</FormLabel>
                 <FormControl>
                   <Input
-                    className='shadcn'
                     {...field}
                   />
                 </FormControl>
