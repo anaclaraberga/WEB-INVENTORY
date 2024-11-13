@@ -10,6 +10,8 @@ import Loader from './components/loader.tsx';
 import AddClientPage from './pages/admin/clients/add.tsx';
 import Clients from './pages/admin/clients/index.tsx';
 import Dashboard from './pages/admin/dashboard/index.tsx';
+import AddOrderPage from './pages/admin/orders/add.tsx';
+import Orders from './pages/admin/orders/index.tsx';
 import AddProductPage from './pages/admin/products/add.tsx';
 import Products from './pages/admin/products/index.tsx';
 import AddSupplierPage from './pages/admin/suppliers/add.tsx';
@@ -71,6 +73,8 @@ const AppRouter = () => (
             <Route path="clients/:id" element={<ProtectedRoute><AddClientPage /></ProtectedRoute>} />
             <Route path="users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
             <Route path="users/:id" element={<ProtectedRoute><AddUserPage /></ProtectedRoute>} />
+            <Route path="orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+            <Route path="orders/:id" element={<ProtectedRoute><AddOrderPage /></ProtectedRoute>} />
           </Route>
           <Route path="general" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
           {/* <Route path="users" element={<ProtectedRoute><Users /></ProtectedRoute>} /> */}
