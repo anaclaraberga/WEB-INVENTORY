@@ -14,7 +14,7 @@ export default function Products() {
       <div className='mb-2 flex items-center justify-between space-y-2'>
         <div className='flex w-full justify-between'>
           <h2 className='text-2xl font-bold tracking-tight'>Produtos</h2>
-          <Button onClick={() => navigation("/product/add")}>Novo produto</Button>
+          <Button onClick={() => navigation("/admin/product/add")}>Novo produto</Button>
         </div>
       </div>
       <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
