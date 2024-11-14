@@ -37,6 +37,7 @@ export default function AddProductPage() {
   })
 
   function onSubmit(data: ProductFormValues) {
+    console.log(data)
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -146,7 +147,8 @@ export default function AddProductPage() {
                 <FormControl>
                   <Input
                     type='file'
-                    className='shadcn'
+                    accept='image/png,image/jpg'
+                    multiple={false}
                     {...fileRef}
                   />
                 </FormControl>
