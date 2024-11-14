@@ -13,10 +13,9 @@ export const orderFormSchema = z.object({
   ),
   clientId: z
     .string({ required_error: "O pedido precisa ter um cliente" }),
-  date: z.date({ required_error: "Data não informada" }).optional(),
+  date: z.date({ required_error: "Data não informada" }),
   status: z
     .string({ required_error: "O pedido precisa ter um status atual" })
-    .optional(),
 })
 
 export type OrderFormValues = z.infer<typeof orderFormSchema>
@@ -25,6 +24,6 @@ export const defaultValues: OrderFormValues = {
   id: null,
   products: [],
   clientId: "",
+  status: "",
   date: new Date(),
-  status: "CRIADO"
 }

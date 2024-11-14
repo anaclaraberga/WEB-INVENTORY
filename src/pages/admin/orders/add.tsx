@@ -6,7 +6,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { defaultValues, orderFormSchema, OrderFormValues } from './form-schema'
+import { SupplierService } from '@/api/services/supplier-service'
 
 const clients = [
   {
@@ -35,18 +36,9 @@ export default function AddOrderPage() {
   const { id } = useParams()
   const [formValues, setFormValues] = useState(defaultValues)
   const [products, setProducts] = useState<any>([
-    { value: 'produto1', label: 'Produto 1' },
-    { value: 'produto2', label: 'Produto 2' },
+    { id: 1, value: 'produto1', label: 'Produto 1' },
+    { id: 2, value: 'produto2', label: 'Produto 2' },
   ]);
-
-  const addProduct = () => {
-    setProducts([...products, { id: '', quantity: 1 }]);
-  };
-
-  const removeProduct = (index: number) => {
-    setProducts(products.filter((_: any, i: number) => i !== index));
-  };
-
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: formValues,
@@ -54,18 +46,33 @@ export default function AddOrderPage() {
     mode: 'onChange',
   })
 
-  const onSubmit = (data: any) => {
-    console.log("DATA", data)
-    try {
-      // await SupplierService.create(data)
+  const addProduct = () => {
+    const product = { id: '', quantity: 1 };
+    setFormValues({ ...form.getValues(), products: [...form.getValues().products, product] })
+  };
 
+  const removeProduct = (index: number) => {
+    setFormValues({ ...formValues, products: formValues.products.filter((_: any, i: number) => i !== index) });
+  };
+
+  const onSubmit = async (data: any) => {
+    console.log("DATA SUBMITTED")
+    console.log(data)
+
+    if (data.products.length == 0) {
+      alert("É necessário possuir ao menos um produto")
+      return
+    }
+
+    try {
+    await SupplierService.create(data)
 
       toast({
-        title: 'Supplier created successfully',
+        title: 'Order created successfully',
       })
     } catch (error: any) {
       toast({
-        title: 'Error creating supplier',
+        title: 'Error creating order',
         description: error.message,
       })
     }
@@ -74,8 +81,8 @@ export default function AddOrderPage() {
   useEffect(() => {
     (async () => {
       if (id) {
-        // const response = await SupplierService.findById(id)
-        // setFormValues({ ...response })
+        const response = await SupplierService.findById(id)
+        setFormValues({ ...response })
       }
     })()
   }, [])
@@ -88,7 +95,7 @@ export default function AddOrderPage() {
         </div>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+        <form onSubmit={form.handleSubmit(async (e) => await onSubmit(e))} className='space-y-8'>
           <FormField
             control={form.control}
             name='clientId'
@@ -100,7 +107,6 @@ export default function AddOrderPage() {
                     <Select
                       {...field}
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -122,7 +128,7 @@ export default function AddOrderPage() {
 
           <div className="mb-4">
             <h3 className="text-lg font-bold">Produtos</h3>
-            {products.map((product, index) => (
+            {formValues.products.map((product, index: number) => (
               <div key={index} className="flex gap-2 mb-2">
                 <FormField
                   control={form.control}
@@ -133,15 +139,15 @@ export default function AddOrderPage() {
                       <FormControl>
                         <Select
                           {...field}
-                          onValueChange={(value) => form.setValue(`products.${index}.id`, value)}
-                          defaultValue={product.id}
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
                         >
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione o produto" />
                           </SelectTrigger>
                           <SelectContent>
-                            {products.map((e, key) => (
-                              <SelectItem value={e.value} key={e.value}>{e.label}</SelectItem>
+                            {products.map((e: { id: string, value: number, label: string }) => (
+                              <SelectItem value={e.id} key={e.label}>{e.label}</SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
@@ -171,16 +177,45 @@ export default function AddOrderPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="button" variant="ghost" onClick={() => removeProduct(index)}>
-                  <Trash width={18} className='text-red-500' />
-                </Button>
+                <div className='h-full flex flex-col justify-between space-y-4'>
+                  <FormLabel>Ações</FormLabel>
+                  <Button type="button" variant="ghost" onClick={() => removeProduct(index)}>
+                    <Trash width={18} className='text-red-500' />
+                  </Button>
+                </div>
               </div>
             ))}
-            <Button type="button" onClick={addProduct}>
+            <Button type="button" variant="secondary" onClick={addProduct}>
               Adicionar Produto
             </Button>
           </div>
-          <Button type='submit' onClick={() => console.log(formValues)}>Salvar</Button>
+
+          <FormField
+            control={form.control}
+            name='status'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Status</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder='Status do pedido' />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="0">PENDENTE</SelectItem>
+                    <SelectItem value="1">PAGO</SelectItem>
+                    <SelectItem value="2">AGUARDANDO</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type='submit'>Salvar</Button>
         </form>
       </Form>
     </BaseTemplate>
