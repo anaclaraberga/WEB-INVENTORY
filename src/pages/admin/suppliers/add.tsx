@@ -76,7 +76,7 @@ export default function AddSupplierPage() {
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder='shadcn' />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
