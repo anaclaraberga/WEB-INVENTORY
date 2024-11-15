@@ -1,3 +1,4 @@
+import { useCart } from "@/hooks/use-cart"
 import { cn } from "@/lib/utils"
 import { Minus, Plus } from "lucide-react"
 import { HTMLAttributes, useState } from "react"
@@ -16,8 +17,9 @@ enum Operation {
   DECREASE
 }
 
-export const ProductCard = ({ title, price, imgUrl, description, ...props }: ProductCardProps) => {
+export const ProductCard = ({ title, price, imgUrl, description, id, ...props }: ProductCardProps) => {
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart()
 
   const handleOperation = (operation: Operation) => {
     if (operation == Operation.INCREASE) {
@@ -29,10 +31,6 @@ export const ProductCard = ({ title, price, imgUrl, description, ...props }: Pro
       let temp = quantity
       setQuantity(temp -= 1)
     }
-  }
-
-  const addToOrder = () => {
-
   }
 
   return (
@@ -59,7 +57,7 @@ export const ProductCard = ({ title, price, imgUrl, description, ...props }: Pro
             <Plus onClick={() => handleOperation(Operation.INCREASE)} />
           </Button>
         </div>
-        <Button className="w-full">
+        <Button className="w-full" onClick={() => addToCart({ id: Number(id), price: Number(price), name: title }, quantity)}>
           Adicionar ao carrinho
         </Button>
       </CardFooter>

@@ -18,6 +18,7 @@ export default function UserProducts() {
             return (
               <ProductCard
                 key={i}
+                id={e}
                 imgUrl='https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg'
                 price='29.90'
                 title='Produto'
