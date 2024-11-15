@@ -1,4 +1,4 @@
-import { sidelinks } from '@/data/sidelinks'
+import { useAuth } from '@/hooks/use-auth'
 import { cn } from '@/lib/utils'
 import { ChevronLeft, Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -17,6 +17,7 @@ export default function Sidebar({
   setIsCollapsed,
 }: SidebarProps) {
   const [navOpened, setNavOpened] = useState(false)
+  const {sideLinks} = useAuth()
 
   useEffect(() => {
     if (navOpened) {
@@ -104,7 +105,7 @@ export default function Sidebar({
           className={`z-40 h-full flex-1 overflow-auto ${navOpened ? 'max-h-screen' : 'max-h-0 py-0 md:max-h-screen md:py-2'}`}
           closeNav={() => setNavOpened(false)}
           isCollapsed={isCollapsed}
-          links={sidelinks}
+          links={sideLinks}
         />
 
         {/* Scrollbar width toggle button */}

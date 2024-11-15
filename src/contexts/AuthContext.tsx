@@ -10,7 +10,7 @@ export interface User {
   name?: string;
   email: string;
   password: string;
-  type: UserType
+  type?: UserType
 }
 
 export interface AuthContextType {
@@ -37,6 +37,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [sideLinks, setSideLinks] = useState<SideLink[]>(userSideLinks)
 
   const login = (userData: User) => {
+    userData.type = UserType.CUSTOMER
+
     if (userData.type == UserType.ADMIN) {
       setSideLinks(sidelinks)
     }
