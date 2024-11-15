@@ -49,15 +49,13 @@ export const ProductCard = ({ title, price, imgUrl, description, ...props }: Pro
         <CardTitle className="text-blue-500">R$ {price}</CardTitle>
       </CardContent>
 
-      <CardFooter className="p-4 flex flex-col gap-2">
+      <CardFooter className="p-4 flex flex-col gap-4">
         <div className="flex items-center justify-between w-full">
-          <Button variant="secondary">
+          <Button variant="secondary" className="text-blue-500">
             <Minus onClick={() => handleOperation(Operation.DECREASE)} />
           </Button>
-          <h3>
-            {quantity}
-          </h3>
-          <Button variant="secondary">
+          <h3>{quantity}</h3>
+          <Button variant="secondary" className="text-blue-500">
             <Plus onClick={() => handleOperation(Operation.INCREASE)} />
           </Button>
         </div>
