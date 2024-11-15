@@ -1,24 +1,30 @@
-import { Button } from '@/components/custom/button'
-import { DataTable } from '@/components/data-table/data-table'
+import { ProductCard } from '@/components/product-card'
 import { BaseTemplate } from '@/template/Base'
 import { useNavigate } from 'react-router-dom'
-import { columns, toolbar } from './data-table/config'
 
-const data: any = []
+const data: any = [1, 2, 3, 4, 5, 6]
 
-export default function Products() {
+export default function UserProducts() {
   const navigation = useNavigate()
 
   return (
     <BaseTemplate>
-      <div className='mb-2 flex items-center justify-between space-y-2'>
+      <div className='mb-2 flex items-start justify-between flex-col space-y-2 gap-5'>
         <div className='flex w-full justify-between'>
-          <h2 className='text-2xl font-bold tracking-tight'>Produtos</h2>
-          <Button onClick={() => navigation("/admin/product/add")}>Novo produto</Button>
+          <h1 className='text-3xl font-bold tracking-tight'>Produtos</h1>
         </div>
-      </div>
-      <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-        <DataTable data={data} columns={columns} toolbar={toolbar}/>
+        <div className='grid grid-cols-4 gap-4 items-start justify-start'>
+          {data.map((e, i: number) => {
+            return (
+              <ProductCard
+                key={i}
+                imgUrl='https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg'
+                price='29.90'
+                title='Produto'
+                description='Hello world'
+              />)
+          })}
+        </div>
       </div>
     </BaseTemplate>
   )
