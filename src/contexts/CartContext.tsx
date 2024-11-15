@@ -1,5 +1,5 @@
 import { useAuth } from "@/hooks/use-auth";
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 import { UserType } from "./AuthContext";
 
 export interface Product {
@@ -14,7 +14,7 @@ export interface CartItem extends Product {
 
 export interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, quantity?: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   removeFromCart: (productId: number) => void;
   totalValue: number;
@@ -23,8 +23,12 @@ export interface CartContextType {
 
 export const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user } = useAuth(); // Obtém o usuário autenticado
+export interface CardProviderProps {
+  children: ReactNode
+}
+
+export const CartProvider = ({ children }: CardProviderProps) => {
+  const { user } = useAuth();
   const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
@@ -40,17 +44,23 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [cart, user]);
 
-  const addToCart = (product: Product, quantity: number = 1) => {
+  const existsItem = (product: Product) => {
+    return cart.find((item) => item.id === product.id);
+  }
 
+  const addToCart = (product: Product, quantity: number = 1) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
+      const existingItem = existsItem(product);
+
       if (existingItem) {
+        console.log("EXISTS");
         return prevCart.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       } else {
+        console.log("NOT EXISTS");
         return [...prevCart, { ...product, quantity }];
       }
     });
@@ -75,6 +85,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const totalItems = useMemo(() => {
     return cart.reduce((total, item) => total + item.quantity, 0);
+  }, [cart]);
+
+  useEffect(() => {
+    console.log("Cart updated:", cart);
   }, [cart]);
 
   return (
