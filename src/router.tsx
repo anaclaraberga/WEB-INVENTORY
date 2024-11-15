@@ -26,6 +26,8 @@ import MaintenanceError from './pages/errors/maintenance-error';
 import NotFoundError from './pages/errors/not-found-error';
 import UnauthorizedError from './pages/errors/unauthorized-error.tsx';
 import LandingPage from './pages/landing-page/index.tsx';
+import UserProducts from './pages/user/products/index.tsx';
+import UserSupplier from './pages/user/suppliers/index.tsx';
 
 const AppRouter = () => (
   <Router>
@@ -51,14 +53,8 @@ const AppRouter = () => (
           </Route>
           <Route path="user" element={<AppShell />}>
             <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
-            <Route path="product/:id" element={<ProtectedRoute><AddProductPage /></ProtectedRoute>} />
-            <Route path="suppliers" element={<ProtectedRoute><Supplier /></ProtectedRoute>} />
-            <Route path="suppliers/:id" element={<ProtectedRoute><AddSupplierPage /></ProtectedRoute>} />
-            <Route path="clients" element={<ProtectedRoute><Clients /></ProtectedRoute>} />
-            <Route path="clients/:id" element={<ProtectedRoute><AddClientPage /></ProtectedRoute>} />
-            <Route path="users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
-            <Route path="users/:id" element={<ProtectedRoute><AddUserPage /></ProtectedRoute>} />
+            <Route path="products" element={<ProtectedRoute><UserProducts /></ProtectedRoute>} />
+            <Route path="suppliers" element={<ProtectedRoute><UserSupplier /></ProtectedRoute>} />
             <Route path="orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
             <Route path="orders/:id" element={<ProtectedRoute><AddOrderPage /></ProtectedRoute>} />
           </Route>
