@@ -50,3 +50,30 @@ export const sidelinks: SideLink[] = [
     icon: <ClipboardList size={18} />,
   }
 ]
+
+export const userSideLinks: SideLink[] = [
+  {
+    title: 'Dashboard',
+    label: '',
+    href: '/user',
+    icon: <LayoutDashboard size={18} />,
+  },
+  {
+    title: 'Produtos',
+    label: '',
+    href: '/user/products',
+    icon: <Package size={18} />,
+  },
+  {
+    title: 'Fornecedores',
+    label: '',
+    href: '/user/suppliers',
+    icon: <Truck size={18} />,
+  },
+  {
+    title: 'Pedidos',
+    label: '',
+    href: '/user/orders',
+    icon: <ClipboardList size={18} />,
+  }
+]

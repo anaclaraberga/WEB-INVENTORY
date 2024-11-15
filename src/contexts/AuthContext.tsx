@@ -1,9 +1,16 @@
+import { SideLink, sidelinks, userSideLinks } from '@/data/sidelinks';
 import { createContext, ReactNode, useEffect, useState } from 'react';
+
+export enum UserType {
+  ADMIN,
+  CUSTOMER
+}
 
 export interface User {
   name?: string;
   email: string;
   password: string;
+  type: UserType
 }
 
 export interface AuthContextType {
@@ -11,6 +18,7 @@ export interface AuthContextType {
   isAuthenticated: boolean;
   login: (userData: User) => void;
   logout: () => void;
+  sideLinks: SideLink[]
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,8 +34,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   });
   const [isAuthenticated, setIsAuthenticated] = useState(!!user);
   const [sessionTimeout, setSessionTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [sideLinks, setSideLinks] = useState<SideLink[]>(userSideLinks)
 
   const login = (userData: User) => {
+    if (userData.type == UserType.ADMIN) {
+      setSideLinks(sidelinks)
+    }
     setUser(userData);
     setIsAuthenticated(true);
     localStorage.setItem('user', JSON.stringify(userData));
@@ -61,6 +73,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, [user]);
 
-  return <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, isAuthenticated, login, logout, sideLinks }}>{children}</AuthContext.Provider>;
 };
 
