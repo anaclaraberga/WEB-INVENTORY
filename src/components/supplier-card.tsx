@@ -10,7 +10,7 @@ export interface SupplierCardProps extends HTMLAttributes<HTMLDivElement> {
 export const SupplierCard = ({ name, description, ...props }: SupplierCardProps) => {
 
   return (
-    <Card className={cn("w-[380px]", props.className)} {...props}>
+    <Card className={cn(props.className)} {...props}>
       <CardHeader className="grid gap-4 p-4">
         <CardTitle>{name}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
