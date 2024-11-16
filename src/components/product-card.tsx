@@ -11,6 +11,13 @@ export interface ProductCardProps extends HTMLAttributes<HTMLDivElement> {
   price: string
   imgUrl: string
   description?: string
+  actions: ProductCardAction[]
+  quantity?: number
+}
+
+export enum ProductCardAction {
+  ADD_TO_CART,
+  REMOVE_FROM_CART
 }
 
 enum Operation {
@@ -18,35 +25,47 @@ enum Operation {
   DECREASE
 }
 
-export const ProductCard = ({ title, price, imgUrl, description, id, ...props }: ProductCardProps) => {
-  const [quantity, setQuantity] = useState(1);
-  const { addToCart } = useCart()
+export const ProductCard = ({ title, price, imgUrl, description, id, quantity, actions, ...props }: ProductCardProps) => {
+  const [newQuantity, setQuantity] = useState(quantity ?? 1);
+  const { addToCart, removeFromCart } = useCart()
 
   const handleOperation = (operation: Operation) => {
     if (operation == Operation.INCREASE) {
-      let temp = quantity
+      let temp = newQuantity
       setQuantity(temp += 1)
     }
 
-    if (operation == Operation.DECREASE && quantity > 1) {
-      let temp = quantity
+    if (operation == Operation.DECREASE && newQuantity > 1) {
+      let temp = newQuantity
       setQuantity(temp -= 1)
     }
   }
 
   const handleAddToCart = () => {
-    addToCart({ id: Number(id), price: Number(price), name: title }, quantity)
+    addToCart({ id: Number(id), price: Number(price), name: title }, newQuantity)
 
     toast({
       title: `${title} foi adicionado ao carrinho`,
       description: (
         <div className="flex flex-col items-center rounded-md border">
           <img src={imgUrl} alt={title} className="object-cover" />
-          <h2 className="p-2">{`${title} - ${quantity} unidades`}</h2>
+          <h2 className="p-2">{`${title} - ${newQuantity} unidades`}</h2>
         </div>
       )
     })
+  }
 
+  const handleRemoveFromCart = () => {
+    removeFromCart(Number(id))
+
+    toast({
+      title: `${title} foi removido do carrinho`,
+      description: (
+        <div className="flex flex-col items-center rounded-md border">
+          <img src={imgUrl} alt={title} className="object-cover" />
+        </div>
+      )
+    })
   }
 
   return (
@@ -68,14 +87,25 @@ export const ProductCard = ({ title, price, imgUrl, description, id, ...props }:
           <Button variant="secondary" className="text-blue-500">
             <Minus onClick={() => handleOperation(Operation.DECREASE)} />
           </Button>
-          <h3>{quantity}</h3>
+          <h3>{newQuantity}</h3>
           <Button variant="secondary" className="text-blue-500">
             <Plus onClick={() => handleOperation(Operation.INCREASE)} />
           </Button>
         </div>
-        <Button className="w-full" onClick={handleAddToCart}>
-          Adicionar ao carrinho
-        </Button>
+        {actions.map((item, i) => {
+          if (item == ProductCardAction.ADD_TO_CART) {
+            return (<Button className="w-full" onClick={handleAddToCart}>
+              Adicionar ao carrinho
+            </Button>)
+          }
+
+          if (item == ProductCardAction.REMOVE_FROM_CART) {
+            return (<Button className="w-full" variant="destructive" onClick={handleRemoveFromCart}>
+              Remover do carrinho
+            </Button>)
+          }
+        })}
+
       </CardFooter>
     </Card>
   )

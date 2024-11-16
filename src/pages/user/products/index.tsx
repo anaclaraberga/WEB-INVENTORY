@@ -1,4 +1,4 @@
-import { ProductCard } from '@/components/product-card'
+import { ProductCard, ProductCardAction } from '@/components/product-card'
 import { BaseTemplate } from '@/template/Base'
 import { useNavigate } from 'react-router-dom'
 
@@ -23,6 +23,7 @@ export default function UserProducts() {
                 price='29.90'
                 title='Produto'
                 description='Hello world'
+                actions={[ProductCardAction.ADD_TO_CART]}
               />)
           })}
         </div>
