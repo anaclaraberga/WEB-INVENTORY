@@ -27,6 +27,7 @@ import MaintenanceError from './pages/errors/maintenance-error';
 import NotFoundError from './pages/errors/not-found-error';
 import UnauthorizedError from './pages/errors/unauthorized-error.tsx';
 import LandingPage from './pages/landing-page/index.tsx';
+import UserCart from './pages/user/cart/index.tsx';
 import UserProducts from './pages/user/products/index.tsx';
 import UserSupplier from './pages/user/suppliers/index.tsx';
 
@@ -55,6 +56,7 @@ const AppRouter = () => (
           <Route path="user" element={<CartProvider><AppShell /></CartProvider>}>
             <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="products" element={<ProtectedRoute><UserProducts /></ProtectedRoute>} />
+            <Route path="cart" element={<ProtectedRoute><UserCart /></ProtectedRoute>} />
             <Route path="suppliers" element={<ProtectedRoute><UserSupplier /></ProtectedRoute>} />
             <Route path="orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
             <Route path="orders/:id" element={<ProtectedRoute><AddOrderPage /></ProtectedRoute>} />
