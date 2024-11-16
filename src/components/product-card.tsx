@@ -4,6 +4,7 @@ import { Minus, Plus } from "lucide-react"
 import { HTMLAttributes, useState } from "react"
 import { Button } from "./custom/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
+import { toast } from "./ui/use-toast"
 
 export interface ProductCardProps extends HTMLAttributes<HTMLDivElement> {
   title: string
@@ -33,8 +34,23 @@ export const ProductCard = ({ title, price, imgUrl, description, id, ...props }:
     }
   }
 
+  const handleAddToCart = () => {
+    addToCart({ id: Number(id), price: Number(price), name: title }, quantity)
+
+    toast({
+      title: `${title} foi adicionado ao carrinho`,
+      description: (
+        <div className="flex flex-col items-center rounded-md border">
+          <img src={imgUrl} alt={title} className="object-cover" />
+          <h2 className="p-2">{`${title} - ${quantity} unidades`}</h2>
+        </div>
+      )
+    })
+
+  }
+
   return (
-    <Card className={cn("w-[380px]", props.className)} {...props}>
+    <Card className={cn(props.className)} {...props}>
       <CardHeader className="grid gap-4 p-2">
         <div className="flex items-center space-x-4 rounded-md border">
           <img src={imgUrl} alt={title} className="object-cover" />
@@ -57,7 +73,7 @@ export const ProductCard = ({ title, price, imgUrl, description, id, ...props }:
             <Plus onClick={() => handleOperation(Operation.INCREASE)} />
           </Button>
         </div>
-        <Button className="w-full" onClick={() => addToCart({ id: Number(id), price: Number(price), name: title }, quantity)}>
+        <Button className="w-full" onClick={handleAddToCart}>
           Adicionar ao carrinho
         </Button>
       </CardFooter>
