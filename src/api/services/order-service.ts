@@ -1,33 +1,36 @@
-import { SupplierFormValues } from '@/pages/admin/suppliers/form-schema'
+import { OrderFormValues } from '@/pages/admin/orders/form-schema'
 import apiClient from '../client/api'
-import { SupplierMapper, SupplierResponseDTO } from '../mappers/supplier-mapper'
+import { OrderMapper, OrderResponseDTO } from '../mappers/order-mapper'
 
 export const OrderService = {
   findAll: async () => {
-    const response = await apiClient.get('/supplier')
-    return response.data.map((element: SupplierResponseDTO) => {
-      return SupplierMapper.toDomain(element)
+    const response = await apiClient.get('/order')
+    return response.data.map((element: OrderResponseDTO) => {
+      return OrderMapper.toDomain(element)
     })
   },
   findById: async (id: string | number) => {
-    const response = await apiClient.get(`/supplier/${id}`)
-    return SupplierMapper.toDomain(response.data)
+    const response = await apiClient.get(`/order/${id}`)
+    return OrderMapper.toDomain(response.data)
   },
-  create: async (data: SupplierFormValues) => {
-    const body = SupplierMapper.toRequest(data)
-    const response = await apiClient.post('/supplier', JSON.stringify(body))
-    return SupplierMapper.toDomain(response.data)
+  findByCustomerId: async (id: string | number) => {
+    const response = await apiClient.get(`/order/customer/${id}`)
+    return response.data.map((element: OrderResponseDTO) => {
+      return OrderMapper.toDomain(element)
+    })
   },
-  update: async (id: string | number, data: SupplierFormValues) => {
-    const body = SupplierMapper.toRequest(data)
-    const response = await apiClient.post(
-      `/supplier/${id}`,
-      JSON.stringify(body)
-    )
-    return SupplierMapper.toDomain(response.data)
+  create: async (data: OrderFormValues) => {
+    const body = OrderMapper.toRequest(data)
+    const response = await apiClient.post('/order', JSON.stringify(body))
+    return OrderMapper.toDomain(response.data)
+  },
+  update: async (id: string | number, data: OrderFormValues) => {
+    const body = OrderMapper.toRequest(data)
+    const response = await apiClient.post(`/order/${id}`, JSON.stringify(body))
+    return OrderMapper.toDomain(response.data)
   },
   delete: async (id: string | number) => {
-    const response = await apiClient.delete(`/supplier/${id}`)
+    const response = await apiClient.delete(`/order/${id}`)
     return response.data
   },
 }
