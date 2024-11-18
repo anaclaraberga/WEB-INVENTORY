@@ -1,3 +1,5 @@
+import { CustomerService } from '@/api/services/customer-service'
+import { OrderService } from '@/api/services/order-service'
 import { Button } from '@/components/custom/button'
 import {
   Form,
@@ -19,26 +21,12 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { defaultValues, orderFormSchema, OrderFormValues } from './form-schema'
-import { SupplierService } from '@/api/services/supplier-service'
-
-const clients = [
-  {
-    id: 15,
-    name: "Sophie Barker"
-  },
-  {
-    id: 20,
-    name: "Jennie Santiago"
-  }
-]
 
 export default function AddOrderPage() {
   const { id } = useParams()
   const [formValues, setFormValues] = useState(defaultValues)
-  const [products, setProducts] = useState<any>([
-    { id: 1, value: 'produto1', label: 'Produto 1' },
-    { id: 2, value: 'produto2', label: 'Produto 2' },
-  ]);
+  const [products, setProducts] = useState<any>([]);
+  const [clients, setClients] = useState([])
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: formValues,
@@ -56,16 +44,13 @@ export default function AddOrderPage() {
   };
 
   const onSubmit = async (data: any) => {
-    console.log("DATA SUBMITTED")
-    console.log(data)
-
     if (data.products.length == 0) {
       alert("É necessário possuir ao menos um produto")
       return
     }
 
     try {
-    await SupplierService.create(data)
+      await OrderService.create(data)
 
       toast({
         title: 'Order created successfully',
@@ -80,8 +65,14 @@ export default function AddOrderPage() {
 
   useEffect(() => {
     (async () => {
+      const apiProducts = await ProductService.findAll()
+      setProducts(apiProducts)
+
+      const apiClients = await CustomerService.findAll()
+      setClients(apiClients)
+
       if (id) {
-        const response = await SupplierService.findById(id)
+        const response = await OrderService.findById(id)
         setFormValues({ ...response })
       }
     })()
@@ -143,7 +134,7 @@ export default function AddOrderPage() {
                           defaultValue={field.value}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Selecione o produto" />
+                            <SelectValue placeholder="Selecione o produto"/>
                           </SelectTrigger>
                           <SelectContent>
                             {products.map((e: { id: string, value: number, label: string }) => (

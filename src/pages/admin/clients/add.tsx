@@ -1,4 +1,5 @@
 import { CustomerService } from '@/api/services/customer-service'
+import { OrderService } from '@/api/services/order-service'
 import { Button } from '@/components/custom/button'
 import {
   Form,
@@ -16,12 +17,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
+import { OrderFormValues } from '../orders/form-schema'
 import { clientFormSchema, ClientFormValues, defaultValues } from './form-schema'
 
 export default function AddClientPage() {
   const { id } = useParams()
-
   const [formValues, setFormValues] = useState(defaultValues)
+  const [history, setHistory] = useState([])
 
   const form = useForm<ClientFormValues>({
     resolver: zodResolver(clientFormSchema),
@@ -32,7 +34,11 @@ export default function AddClientPage() {
 
   async function onSubmit(data: ClientFormValues) {
     try {
-      await CustomerService.create(data)
+      if (formValues.id) {
+        await CustomerService.update(data.id as number, data)
+      } else {
+        await CustomerService.create(data)
+      }
 
       toast({
         title: 'Client created successfully',
@@ -49,7 +55,9 @@ export default function AddClientPage() {
     (async () => {
       if (id) {
         const response = await CustomerService.findById(id)
+        const orders = await OrderService.findByCustomerId(id)
         setFormValues({ ...response })
+        setHistory(orders)
       }
     })()
   }, [])
@@ -126,6 +134,22 @@ export default function AddClientPage() {
           <Button type='submit'>Salvar</Button>
         </form>
       </Form>
+      {history.length > 0 && (
+        <div className='mb-2 flex items-center justify-between space-y-2'>
+          <div className='flex w-full justify-between'>
+            <h2 className='text-2xl font-bold tracking-tight'>Histórico de pedido</h2>
+          </div>
+          <div className='flex flex-col'>
+            {history.map((item: OrderFormValues, i: number) => {
+              return (
+              <div key={i}>
+                <div><h3>{item.date.toString()}</h3></div>
+                <div><h3>{item.status}</h3></div>
+              </div>)
+            })}
+          </div>
+        </div>
+      )}
     </BaseTemplate>
   )
 }
