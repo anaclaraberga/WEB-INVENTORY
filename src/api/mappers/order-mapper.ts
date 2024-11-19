@@ -7,6 +7,7 @@ export interface OrderResponseDTO {
   dateTimeAtCreation: string
   customerId: string
   status: string
+  products?: []
 }
 
 export const OrderMapper = {
@@ -15,7 +16,7 @@ export const OrderMapper = {
       id: response.id as any,
       status: response.status,
       clientId: response.customerId,
-      products: response.products,
+      products: response.products || [],
       date: new Date(response.dateTimeAtCreation),
     }
   },

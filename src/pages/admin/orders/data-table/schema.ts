@@ -1,10 +1,11 @@
 import { z } from 'zod'
 
-export const supplierSchema = z.object({
+export const orderSchema = z.object({
   id: z.string(),
-  name: z.string(),
-  contact: z.string(),
-  address: z.string(),
+  status: z.string(),
+  clientId: z.string(),
+  products: z.any(),
+  date: z.date(),
 })
 
-export type SupplierSchema = z.infer<typeof supplierSchema>
+export type OrderSchema = z.infer<typeof orderSchema>

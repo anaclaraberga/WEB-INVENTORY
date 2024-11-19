@@ -4,9 +4,9 @@ import { DataTableColumnHeader } from '@/components/data-table/data-table-column
 import { Checkbox } from '@/components/ui/checkbox'
 
 import { DataTableToolbarConfig } from '@/components/data-table/data-table-toolbar'
-import { SupplierSchema } from './schema'
+import { OrderSchema } from './schema'
 
-export const columns: ColumnDef<SupplierSchema>[] = [
+export const columns: ColumnDef<OrderSchema>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -41,15 +41,15 @@ export const columns: ColumnDef<SupplierSchema>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'clientId',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Nome' />
+      <DataTableColumnHeader column={column} title='Client' />
     ),
     cell: ({ row }) => {
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('name')}
+            {row.getValue('clientId')}
           </span>
         </div>
       )
@@ -59,15 +59,15 @@ export const columns: ColumnDef<SupplierSchema>[] = [
     }
   },
   {
-    accessorKey: 'contact',
+    accessorKey: 'status',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Contato' />
+      <DataTableColumnHeader column={column} title='Status' />
     ),
     cell: ({ row }) => {
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('contact')}
+            {row.getValue('status')}
           </span>
         </div>
       )
@@ -77,15 +77,15 @@ export const columns: ColumnDef<SupplierSchema>[] = [
     }
   },
   {
-    accessorKey: 'address',
+    accessorKey: 'date',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Endereço' />
+      <DataTableColumnHeader column={column} title='Data' />
     ),
     cell: ({ row }) => {
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('address')}
+            {row.getValue('date')}
           </span>
         </div>
       )
@@ -97,7 +97,7 @@ export const columns: ColumnDef<SupplierSchema>[] = [
 ]
 
 export const toolbar: DataTableToolbarConfig = {
-  placeholder: 'Filtrar fornecedores...',
+  placeholder: 'Filtrar pedidos...',
   searchKey: 'name',
   filters: []
 }
