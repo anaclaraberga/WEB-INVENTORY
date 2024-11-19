@@ -7,7 +7,7 @@ import { BaseTemplate } from '@/template/Base'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { columns, toolbar } from './data-table/config'
-import { supplierSchema } from './data-table/schema'
+import { orderSchema } from './data-table/schema'
 
 export default function Orders() {
   const navigation = useNavigate()
@@ -32,7 +32,7 @@ export default function Orders() {
     ...columns,
     {
       id: 'actions',
-      cell: ({ row }: any) => (<DataTableRowActions row={row} schema={supplierSchema} options={[
+      cell: ({ row }: any) => (<DataTableRowActions row={row} schema={orderSchema} options={[
         {
           type: 'item',
           value: 'edit',
