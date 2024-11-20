@@ -28,6 +28,8 @@ import NotFoundError from './pages/errors/not-found-error';
 import UnauthorizedError from './pages/errors/unauthorized-error.tsx';
 import LandingPage from './pages/landing-page/index.tsx';
 import UserCart from './pages/user/cart/index.tsx';
+import { UserOrderDetails } from './pages/user/orders/details.tsx';
+import UserOrders from './pages/user/orders/index.tsx';
 import UserProducts from './pages/user/products/index.tsx';
 import UserSupplier from './pages/user/suppliers/index.tsx';
 
@@ -58,8 +60,8 @@ const AppRouter = () => (
             <Route path="products" element={<ProtectedRoute><UserProducts /></ProtectedRoute>} />
             <Route path="cart" element={<ProtectedRoute><UserCart /></ProtectedRoute>} />
             <Route path="suppliers" element={<ProtectedRoute><UserSupplier /></ProtectedRoute>} />
-            <Route path="orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
-            <Route path="orders/:id" element={<ProtectedRoute><AddOrderPage /></ProtectedRoute>} />
+            <Route path="orders" element={<ProtectedRoute><UserOrders /></ProtectedRoute>} />
+            <Route path="orders/:id" element={<ProtectedRoute><UserOrderDetails /></ProtectedRoute>} />
           </Route>
           {/* <Route path="users" element={<ProtectedRoute><Users /></ProtectedRoute>} /> */}
         </Route>
