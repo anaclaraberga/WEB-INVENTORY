@@ -17,6 +17,7 @@ export interface CartContextType {
   addToCart: (product: Product, quantity?: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   removeFromCart: (productId: number) => void;
+  clear: () => void;
   totalValue: number;
   totalItems: number;
 }
@@ -78,6 +79,10 @@ export const CartProvider = ({ children }: CardProviderProps) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
 
+  const clear = () => {
+    setCart([])
+  }
+
   const totalValue = useMemo(() => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   }, [cart]);
@@ -99,6 +104,7 @@ export const CartProvider = ({ children }: CardProviderProps) => {
         removeFromCart,
         totalValue,
         totalItems,
+        clear
       }}
     >
       {children}
