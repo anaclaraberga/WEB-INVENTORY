@@ -28,7 +28,7 @@ export default function UserSupplier() {
         <div className='flex w-full justify-between'>
           <h1 className='text-3xl font-bold tracking-tight'>Fornecedores</h1>
         </div>
-        <div className='grid grid-cols-4 gap-4 items-start justify-start'>
+        <div className='w-full grid grid-cols-4 gap-4 items-start justify-start'>
           {data.map((e, i) => {
             return <SupplierCard key={i} name='Bill Estrada' description='Melvin Frazier' />
           })}
