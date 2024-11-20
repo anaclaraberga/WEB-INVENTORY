@@ -5,10 +5,9 @@ export const NumberUtils = {
       currencyDisplay: 'symbol',
       currencySign: 'standard',
       style: 'currency',
-      minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })
 
-    return formatter.format(Number(num) / 100)
+    return formatter.format(Number(num))
   },
 }

@@ -67,10 +67,9 @@ export const CartProvider = ({ children }: CardProviderProps) => {
   };
 
   const updateQuantity = (productId: number, quantity: number) => {
-
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.id === productId ? { ...item, quantity: Math.max(quantity, 1) } : item
+        item.id === productId ? { ...item, quantity: quantity } : item
       )
     );
   };
@@ -88,7 +87,7 @@ export const CartProvider = ({ children }: CardProviderProps) => {
   }, [cart]);
 
   useEffect(() => {
-    console.log("Cart updated:", cart);
+    console.log("Cart updated:", cart, totalItems, totalValue);
   }, [cart]);
 
   return (
