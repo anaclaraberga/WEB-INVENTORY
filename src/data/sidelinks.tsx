@@ -1,5 +1,5 @@
 
-import { CircleUser, ClipboardList, LayoutDashboard, Package, Truck, Users } from 'lucide-react'
+import { CircleUser, ClipboardList, LayoutDashboard, Package, ShoppingCart, Truck, Users } from 'lucide-react'
 
 export interface NavLink {
   title: string
@@ -75,5 +75,11 @@ export const userSideLinks: SideLink[] = [
     label: '',
     href: '/user/orders',
     icon: <ClipboardList size={18} />,
+  },
+  {
+    title: 'Carrinho',
+    label: '',
+    href: '/user/cart',
+    icon: <ShoppingCart size={18} />,
   }
 ]
