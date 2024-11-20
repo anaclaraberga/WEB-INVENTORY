@@ -27,18 +27,20 @@ enum Operation {
 
 export const ProductCard = ({ title, price, imgUrl, description, id, quantity, actions, ...props }: ProductCardProps) => {
   const [newQuantity, setQuantity] = useState(quantity ?? 1);
-  const { addToCart, removeFromCart } = useCart()
+  const { addToCart, removeFromCart, updateQuantity } = useCart()
 
   const handleOperation = (operation: Operation) => {
+    let temp = newQuantity
     if (operation == Operation.INCREASE) {
-      let temp = newQuantity
-      setQuantity(temp += 1)
+      temp += 1
     }
 
     if (operation == Operation.DECREASE && newQuantity > 1) {
-      let temp = newQuantity
-      setQuantity(temp -= 1)
+      temp -= 1
     }
+
+    setQuantity(temp)
+    updateQuantity(Number(id), temp)
   }
 
   const handleAddToCart = () => {
