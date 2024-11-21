@@ -1,11 +1,22 @@
+import { ProductService } from '@/api/services/product-service'
 import { ProductCard, ProductCardAction } from '@/components/product-card'
 import { BaseTemplate } from '@/template/Base'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const data: any = [1, 2, 3, 4, 5, 6]
 
 export default function UserProducts() {
   const navigation = useNavigate()
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      const apiProducts = await ProductService.findAll()
+      setData(apiProducts)
+    })()
+  }, [])
+
 
   return (
     <BaseTemplate>
@@ -14,7 +25,7 @@ export default function UserProducts() {
           <h1 className='text-3xl font-bold tracking-tight'>Produtos</h1>
         </div>
         <div className='grid grid-cols-4 gap-4 items-start justify-start'>
-          {data.map((e, i: number) => {
+          {data.length > 0 && data.map((e, i: number) => {
             return (
               <ProductCard
                 key={i}

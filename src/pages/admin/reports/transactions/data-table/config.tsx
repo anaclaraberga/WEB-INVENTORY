@@ -16,7 +16,7 @@ export const columns: ColumnDef<TransactionSchema>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'data',
+    accessorKey: 'dateTimeAtCreation',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Data' />
     ),
@@ -24,7 +24,7 @@ export const columns: ColumnDef<TransactionSchema>[] = [
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('data')}
+            {row.getValue('dateTimeAtCreation')}
           </span>
         </div>
       )
@@ -34,7 +34,7 @@ export const columns: ColumnDef<TransactionSchema>[] = [
     }
   },
   {
-    accessorKey: 'tipo',
+    accessorKey: 'type',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Tipo' />
     ),
@@ -42,7 +42,7 @@ export const columns: ColumnDef<TransactionSchema>[] = [
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('tipo')}
+            {row.getValue('type')}
           </span>
         </div>
       )
@@ -52,7 +52,7 @@ export const columns: ColumnDef<TransactionSchema>[] = [
     }
   },
   {
-    accessorKey: 'valor',
+    accessorKey: 'value',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Valor' />
     ),
@@ -60,7 +60,7 @@ export const columns: ColumnDef<TransactionSchema>[] = [
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('valor')}
+            {row.getValue('value')}
           </span>
         </div>
       )

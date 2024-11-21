@@ -48,7 +48,7 @@ const formSchema = z
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false)
-  const { login, isAuthenticated, user } = useAuth()
+  const { login, isAuthenticated } = useAuth()
   const navigation = useNavigate()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -64,10 +64,10 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    const response = await AuthService.signUp(data);
+    const response = await AuthService.signUp(data as any);
 
     if (response.id) {
-      await login(data)
+      await login(data as any)
 
       if (isAuthenticated) {
         setIsLoading(false)
@@ -77,6 +77,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
         } else {
           navigation("/admin/")
         }
+
         return
       }
     }

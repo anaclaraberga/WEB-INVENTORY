@@ -1,3 +1,4 @@
+import { TransactionService } from "@/api/services/transaction-service"
 import { Button } from "@/components/custom/button"
 import { DataTable } from "@/components/data-table/data-table"
 import { useToast } from "@/components/ui/use-toast"
@@ -21,8 +22,10 @@ export const TransactionsReport = () => {
   useEffect(() => {
     (async () => {
       try {
-        // const response = await TransactionService.findAll()
-        setData([])
+        const response = await TransactionService.findAll()
+        setData(response)
+
+        console.log(data)
       } catch (error) {
         console.log(error)
         toast({

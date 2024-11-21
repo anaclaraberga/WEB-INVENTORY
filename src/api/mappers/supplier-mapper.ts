@@ -14,6 +14,7 @@ export const SupplierMapper = {
       name: response.companyName,
       contact: response.contact,
       address: response.address,
+      cnpj: response.companyName,
     }
   },
   toRequest: (domain: SupplierFormValues): SupplierResponseDTO => {

@@ -1,3 +1,5 @@
+import { ProductService } from '@/api/services/product-service'
+import { SupplierService } from '@/api/services/supplier-service'
 import { Button } from '@/components/custom/button'
 import {
   Form,
@@ -15,40 +17,49 @@ import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { NumberUtils } from '@/utils/NumberUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { defaultValues, productFormSchema, ProductFormValues } from './form-schema'
 
-const fornecedores = [
-  {
-    label: "Fornecedor 1",
-    value: "1"
-  },
-  {
-    label: "Fornecedor 2",
-    value: "2"
-  }
-]
-
 export default function AddProductPage() {
+  const [suppliers, setSuppliers] = useState([])
+  const navigate = useNavigate()
+
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
     defaultValues,
     mode: 'onChange',
   })
 
-  function onSubmit(data: ProductFormValues) {
+  async function onSubmit(data: ProductFormValues) {
+    try {
+      const response = await ProductService.create(data);
+
+      toast({
+        title: 'Produto criado com sucesso',
+        description: ''
+      })
+
+      navigate("/user/products")
+
+    } catch (error: any) {
+      toast({
+        title: 'Ocorreu um erro',
+        description: error.response.data.message
+      })
+    }
     console.log(data)
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
   }
 
   const fileRef = form.register("image");
+
+  useEffect(() => {
+    (async () => {
+      const response = await SupplierService.findAll()
+      setSuppliers(response)
+    })()
+  }, [])
 
   return (
     <BaseTemplate>
@@ -58,7 +69,7 @@ export default function AddProductPage() {
         </div>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+        <form onSubmit={form.handleSubmit(async (e) => await onSubmit(e))} className='space-y-8'>
           <FormField
             control={form.control}
             name='name'
@@ -174,8 +185,8 @@ export default function AddProductPage() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {fornecedores.map((e, key) => (
-                      <SelectItem value={e.value} key={key}>{e.label}</SelectItem>
+                    {suppliers.map((e, key) => (
+                      <SelectItem value={e.id} key={key}>{e.name}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
