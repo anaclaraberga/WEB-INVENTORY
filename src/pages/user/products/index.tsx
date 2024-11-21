@@ -4,8 +4,6 @@ import { BaseTemplate } from '@/template/Base'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const data: any = [1, 2, 3, 4, 5, 6]
-
 export default function UserProducts() {
   const navigation = useNavigate()
   const [data, setData] = useState([])
@@ -30,10 +28,10 @@ export default function UserProducts() {
               <ProductCard
                 key={i}
                 id={e}
-                imgUrl='https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg'
-                price='29.90'
-                title='Produto'
-                description='Hello world'
+                imgUrl={"http://localhost:8080/" + e.image}
+                price={e.price}
+                title={e.name}
+                description={e.description}
                 actions={[ProductCardAction.ADD_TO_CART]}
               />)
           })}

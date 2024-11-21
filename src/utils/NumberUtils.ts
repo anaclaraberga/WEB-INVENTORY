@@ -8,6 +8,6 @@ export const NumberUtils = {
       maximumFractionDigits: 2,
     })
 
-    return formatter.format(Number(num))
+    return formatter.format(Number(num) / 100)
   },
 }

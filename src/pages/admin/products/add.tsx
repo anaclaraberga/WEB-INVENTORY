@@ -33,6 +33,7 @@ export default function AddProductPage() {
   })
 
   async function onSubmit(data: ProductFormValues) {
+    console.log(data)
     try {
       const response = await ProductService.create(data);
 

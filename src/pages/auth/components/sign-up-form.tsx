@@ -67,19 +67,8 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
     const response = await AuthService.signUp(data as any);
 
     if (response.id) {
-      await login(data as any)
-
-      if (isAuthenticated) {
-        setIsLoading(false)
-
-        if (response.type == UserType.DEFAULT) {
-          navigation("/user/")
-        } else {
-          navigation("/admin/")
-        }
-
-        return
-      }
+      navigation("/sign-in")
+      return
     }
 
     setTimeout(() => {
