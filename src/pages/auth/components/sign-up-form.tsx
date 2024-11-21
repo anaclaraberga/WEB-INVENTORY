@@ -1,3 +1,4 @@
+import { AuthService } from '@/api/services/auth-service'
 import { Button } from '@/components/custom/button'
 import { PasswordInput } from '@/components/custom/password-input'
 import {
@@ -9,6 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { UserType } from '@/contexts/AuthContext'
 import { useAuth } from '@/hooks/use-auth'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -46,7 +48,7 @@ const formSchema = z
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false)
-  const { login, isAuthenticated } = useAuth()
+  const { login, isAuthenticated, user } = useAuth()
   const navigation = useNavigate()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,14 +61,24 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    login(data)
 
-    if (isAuthenticated) {
-      setIsLoading(false)
-      navigation("/dashboard")
-      return
+    const response = await AuthService.signUp(data);
+
+    if (response.id) {
+      await login(data)
+
+      if (isAuthenticated) {
+        setIsLoading(false)
+
+        if (response.type == UserType.DEFAULT) {
+          navigation("/user/")
+        } else {
+          navigation("/admin/")
+        }
+        return
+      }
     }
 
     setTimeout(() => {
@@ -77,7 +89,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(async (e) => await onSubmit(e))}>
           <div className='grid gap-2'>
             <FormField
               control={form.control}

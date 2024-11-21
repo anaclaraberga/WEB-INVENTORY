@@ -1,9 +1,10 @@
+import { AuthService } from '@/api/services/auth-service';
 import { SideLink, sidelinks, userSideLinks } from '@/data/sidelinks';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
 export enum UserType {
-  ADMIN,
-  CUSTOMER
+  ADMIN = "ADMIN",
+  DEFAULT = "DEFAULT"
 }
 
 export interface User {
@@ -37,13 +38,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [sessionTimeout, setSessionTimeout] = useState<NodeJS.Timeout | null>(null);
   const [sideLinks, setSideLinks] = useState<SideLink[]>(userSideLinks)
 
-  const login = (userData: User) => {
-    userData.type = UserType.CUSTOMER
+  const login = async (userData: User) => {
+    const response = await AuthService.signIn(userData)
 
-    if (userData.type == UserType.ADMIN) {
+    if (response.type == "ADMIN") {
       setSideLinks(sidelinks)
     }
-    setUser(userData);
+
+    setUser(response);
     setIsAuthenticated(true);
     localStorage.setItem('user', JSON.stringify(userData));
     startSessionTimeout();
@@ -71,9 +73,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   useEffect(() => {
-    if (user) {
-      login(user);
-    }
+    (async () => {
+      if (user) await login(user);
+    })()
+
+    console.log(user)
   }, [user]);
 
   return <AuthContext.Provider value={{ user, isAuthenticated, login, logout, sideLinks }}>{children}</AuthContext.Provider>;

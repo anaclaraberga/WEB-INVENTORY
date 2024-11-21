@@ -9,6 +9,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { toast } from '@/components/ui/use-toast'
+import { UserType } from '@/contexts/AuthContext'
 import { useAuth } from '@/hooks/use-auth'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -36,7 +38,7 @@ const formSchema = z.object({
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
-  const { login, isAuthenticated } = useAuth()
+  const { login, isAuthenticated, user } = useAuth()
   const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -47,16 +49,24 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
     try {
-      login(data)
-      if (isAuthenticated) {
+      await login(data)
+      if (!isAuthenticated) throw new Error("Não autenticado")
+
+      if (user?.type == UserType.DEFAULT) {
+        navigate("/user/")
+      } else {
         navigate("/admin/")
-        return
       }
+      return
+
     } catch (error) {
+      toast({
+        title: 'Usuário ou senha inválidos'
+      })
       console.error(error)
     } finally {
       setIsLoading(false)
@@ -66,7 +76,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(async (e) => await onSubmit(e))}>
           <div className='grid gap-2'>
             <FormField
               control={form.control}
