@@ -5,6 +5,7 @@ export interface UserResponseDTO {
   name: string
   email: string
   password: string
+  type: string
 }
 
 export const UserMapper = {
@@ -14,6 +15,7 @@ export const UserMapper = {
       name: response.name,
       email: response.email,
       password: response.password,
+      type: response.type,
       confirm: '',
     }
   },
@@ -23,6 +25,7 @@ export const UserMapper = {
       name: domain.name,
       email: domain.email,
       password: domain.password,
+      type: domain.type,
     }
   },
 }

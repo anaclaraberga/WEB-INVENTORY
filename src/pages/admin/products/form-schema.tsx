@@ -1,6 +1,13 @@
 import { z } from "zod"
 
 export const productFormSchema = z.object({
+  id: z
+    .number({
+      required_error: 'O produto precisa ter um preço',
+      message: 'Preço inválido'
+    })
+    .positive()
+    .nullable(),
   name: z
     .string({ required_error: "O Produto precisa ter um nome" })
     .min(3, {
@@ -38,6 +45,7 @@ export const productFormSchema = z.object({
 export type ProductFormValues = z.infer<typeof productFormSchema>
 
 export const defaultValues: Partial<ProductFormValues> = {
+  id: null,
   name: '',
   description: '',
   price: 0,

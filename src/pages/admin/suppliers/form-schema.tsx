@@ -18,7 +18,8 @@ export const supplierFormSchema = z.object({
     .min(3),
   cnpj: z
     .string({ required_error: "O fornecedor precisa ter um cnpj" })
-    .min(3),
+    .min(14)
+    .max(14),
   address: z
     .string()
     .min(3)

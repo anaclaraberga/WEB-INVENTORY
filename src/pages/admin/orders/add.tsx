@@ -65,8 +65,8 @@ export default function AddOrderPage() {
 
   useEffect(() => {
     (async () => {
-      const apiProducts = await ProductService.findAll()
-      setProducts(apiProducts)
+      // const apiProducts = await ProductService.findAll()
+      // setProducts(apiProducts)
 
       const apiClients = await CustomerService.findAll()
       setClients(apiClients)
