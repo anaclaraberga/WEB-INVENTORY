@@ -15,6 +15,7 @@ import AddOrderPage from './pages/admin/orders/add.tsx';
 import Orders from './pages/admin/orders/index.tsx';
 import AddProductPage from './pages/admin/products/add.tsx';
 import Products from './pages/admin/products/index.tsx';
+import { TransactionsReport } from './pages/admin/reports/transactions/index.tsx';
 import AddSupplierPage from './pages/admin/suppliers/add.tsx';
 import Supplier from './pages/admin/suppliers/index.tsx';
 import AddUserPage from './pages/admin/users/add.tsx';
@@ -54,6 +55,9 @@ const AppRouter = () => (
             <Route path="users/:id" element={<ProtectedRoute><AddUserPage /></ProtectedRoute>} />
             <Route path="orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
             <Route path="orders/:id" element={<ProtectedRoute><AddOrderPage /></ProtectedRoute>} />
+            <Route path="reports">
+              <Route path="transactions" element={<ProtectedRoute><TransactionsReport /></ProtectedRoute>} />
+            </Route>
           </Route>
           <Route path="user" element={<CartProvider><AppShell /></CartProvider>}>
             <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
