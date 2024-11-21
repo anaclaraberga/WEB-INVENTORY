@@ -1,9 +1,7 @@
 import { useCart } from "@/hooks/use-cart"
 import { cn } from "@/lib/utils"
-import { Minus, Plus } from "lucide-react"
 import { HTMLAttributes, useState } from "react"
-import { Button } from "./custom/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { toast } from "./ui/use-toast"
 
 export interface ProductCardProps extends HTMLAttributes<HTMLDivElement> {
@@ -84,7 +82,7 @@ export const ProductCard = ({ title, price, imgUrl, description, id, quantity, a
         <CardTitle className="text-blue-500">R$ {price}</CardTitle>
       </CardContent>
 
-      <CardFooter className="p-4 flex flex-col gap-4">
+      {/* <CardFooter className="p-4 flex flex-col gap-4">
         <div className="flex items-center justify-between w-full">
           <Button variant="secondary" className="text-blue-500">
             <Minus onClick={() => handleOperation(Operation.DECREASE)} />
@@ -108,7 +106,7 @@ export const ProductCard = ({ title, price, imgUrl, description, id, quantity, a
           }
         })}
 
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }
