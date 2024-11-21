@@ -5,6 +5,7 @@ import { BaseTemplate } from "@/template/Base"
 import { useEffect, useRef, useState } from "react"
 import { useReactToPrint } from "react-to-print"
 import { columns, toolbar } from "./data-table/config"
+import { SalesService } from "@/api/services/sales-service"
 
 export const SalesReport = () => {
   const [data, setData] = useState([])
@@ -21,7 +22,7 @@ export const SalesReport = () => {
   useEffect(() => {
     (async () => {
       try {
-        // const response = await SalesService.findAll()
+        const response = await SalesService.findAll()
         setData([])
       } catch (error) {
         console.log(error)

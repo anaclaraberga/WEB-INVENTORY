@@ -7,7 +7,7 @@ export const orderFormSchema = z.object({
     .nullable(),
   products: z.array(
     z.object({
-      id: z.string(),
+      productId: z.string(),
       quantity: z.number().min(1, 'Quantidade deve ser no mínimo 1'),
     })
   ),

@@ -5,7 +5,7 @@ import { DataTableColumnHeader } from '@/components/data-table/data-table-column
 import { DataTableToolbarConfig } from '@/components/data-table/data-table-toolbar'
 import { TransactionSchema } from './schema'
 
-export const columns: ColumnDef<TransactionSchema>[] = [
+export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
@@ -16,15 +16,15 @@ export const columns: ColumnDef<TransactionSchema>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'data',
+    accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Data' />
+      <DataTableColumnHeader column={column} title='Nome' />
     ),
     cell: ({ row }) => {
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('data')}
+            {row.getValue('name')}
           </span>
         </div>
       )
@@ -34,69 +34,15 @@ export const columns: ColumnDef<TransactionSchema>[] = [
     }
   },
   {
-    accessorKey: 'tipo',
+    accessorKey: 'quantity',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Tipo' />
+      <DataTableColumnHeader column={column} title='Quantidade' />
     ),
     cell: ({ row }) => {
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('tipo')}
-          </span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    }
-  },
-  {
-    accessorKey: 'valor',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Valor' />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('valor')}
-          </span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    }
-  },
-  {
-    accessorKey: 'productId',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Id do produto' />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('productId')}
-          </span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    }
-  },
-  {
-    accessorKey: 'orderId',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Id do pedido' />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('orderId')}
+            {row.getValue('quantity')}
           </span>
         </div>
       )
@@ -108,7 +54,7 @@ export const columns: ColumnDef<TransactionSchema>[] = [
 ]
 
 export const toolbar: DataTableToolbarConfig = {
-  placeholder: 'Filtrar transações...',
-  searchKey: 'data',
+  placeholder: 'Filtrar estoque...',
+  searchKey: 'name',
   filters: []
 }

@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { columns, toolbar } from './data-table/config'
 import { orderSchema } from './data-table/schema'
+import { OrderService } from '@/api/services/order-service'
 
 export default function Orders() {
   const navigation = useNavigate()
@@ -17,7 +18,7 @@ export default function Orders() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await SupplierService.findAll()
+        const response = await OrderService.findAll()
         setData(response)
       } catch (error) {
         toast({

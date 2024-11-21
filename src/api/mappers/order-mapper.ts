@@ -15,9 +15,9 @@ export const OrderMapper = {
     return {
       id: response.id as any,
       status: response.status,
-      clientId: response.customerId,
+      clientId: response.customerId.id,
       products: response.products || [],
-      date: new Date(response.dateTimeAtCreation),
+      date: response.dateTimeAtCreation,
     }
   },
   toRequest: (domain: OrderFormValues): OrderResponseDTO => {
@@ -26,6 +26,7 @@ export const OrderMapper = {
       dateTimeAtCreation: domain.date.toString(),
       customerId: domain.clientId,
       status: domain.status,
+      items: domain.products
     }
   },
 }

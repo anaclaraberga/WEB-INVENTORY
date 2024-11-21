@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { defaultValues, orderFormSchema, OrderFormValues } from './form-schema'
+import { ProductService } from '@/api/services/product-service'
 
 export default function AddOrderPage() {
   const { id } = useParams()
@@ -65,8 +66,8 @@ export default function AddOrderPage() {
 
   useEffect(() => {
     (async () => {
-      // const apiProducts = await ProductService.findAll()
-      // setProducts(apiProducts)
+      const apiProducts = await ProductService.findAll()
+      setProducts(apiProducts)
 
       const apiClients = await CustomerService.findAll()
       setClients(apiClients)
@@ -123,7 +124,7 @@ export default function AddOrderPage() {
               <div key={index} className="flex gap-2 mb-2">
                 <FormField
                   control={form.control}
-                  name={`products.${index}.id`}
+                  name={`products.${index}.productId`}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Produto</FormLabel>
@@ -137,8 +138,8 @@ export default function AddOrderPage() {
                             <SelectValue placeholder="Selecione o produto"/>
                           </SelectTrigger>
                           <SelectContent>
-                            {products.map((e: { id: string, value: number, label: string }) => (
-                              <SelectItem value={e.id} key={e.label}>{e.label}</SelectItem>
+                            {products.map((e: any) => (
+                              <SelectItem value={e.id} key={e.name}>{e.name}</SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
@@ -197,8 +198,8 @@ export default function AddOrderPage() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="0">Pendente</SelectItem>
-                    <SelectItem value="1">Concluído</SelectItem>
+                    <SelectItem value="ACTIVE">Pendente</SelectItem>
+                    <SelectItem value="INACTIVE">Concluído</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

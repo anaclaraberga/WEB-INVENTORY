@@ -5,7 +5,7 @@ import { BaseTemplate } from '@/template/Base'
 import { useEffect, useState } from 'react'
 
 export default function UserSupplier() {
-  const [data, setData] = useState([1,2,3,4,5,6])
+  const [data, setData] = useState([])
   const { toast } = useToast()
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function UserSupplier() {
         </div>
         <div className='w-full grid grid-cols-4 gap-4 items-start justify-start'>
           {data.map((e, i) => {
-            return <SupplierCard key={i} name='Bill Estrada' description='Melvin Frazier' />
+            return <SupplierCard key={i} name={e.name} description={e.contact + " - " + e.address} />
           })}
         </div>
       </div>

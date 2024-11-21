@@ -3,11 +3,28 @@ import { DataTable } from '@/components/data-table/data-table'
 import { BaseTemplate } from '@/template/Base'
 import { useNavigate } from 'react-router-dom'
 import { columns, toolbar } from './data-table/config'
-
-const data: any = []
+import { useEffect, useState } from 'react'
+import { useToast } from '@/components/ui/use-toast'
+import { ProductService } from '@/api/services/product-service'
 
 export default function Products() {
   const navigation = useNavigate()
+  const [data, setData] = useState([])
+  const { toast } = useToast()
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await ProductService.findAll()
+        setData(response)
+      } catch (error) {
+        toast({
+          title: 'Não foi possível conectar com o servidor',
+          description: 'Tente novamente mais tarde',
+        })
+      }
+    })()
+  }, [])
 
   return (
     <BaseTemplate>

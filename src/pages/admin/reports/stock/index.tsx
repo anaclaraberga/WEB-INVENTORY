@@ -5,6 +5,7 @@ import { BaseTemplate } from "@/template/Base"
 import { useEffect, useRef, useState } from "react"
 import { useReactToPrint } from "react-to-print"
 import { columns, toolbar } from "./data-table/config"
+import { StockService } from "@/api/services/stock-service"
 
 export const StockReport = () => {
   const [data, setData] = useState([])
@@ -21,8 +22,8 @@ export const StockReport = () => {
   useEffect(() => {
     (async () => {
       try {
-        // const response = await StockService.findAll()
-        setData([])
+        const response = await StockService.findAll()
+        setData(response)
       } catch (error) {
         console.log(error)
         toast({
