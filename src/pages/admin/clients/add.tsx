@@ -1,5 +1,4 @@
 import { CustomerService } from '@/api/services/customer-service'
-import { OrderService } from '@/api/services/order-service'
 import { Button } from '@/components/custom/button'
 import {
   Form,
@@ -16,12 +15,17 @@ import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { OrderFormValues } from '../orders/form-schema'
-import { clientFormSchema, ClientFormValues, defaultValues } from './form-schema'
+import {
+  clientFormSchema,
+  ClientFormValues,
+  defaultValues,
+} from './form-schema'
 
 export default function AddClientPage() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [history, setHistory] = useState([])
 
@@ -43,6 +47,8 @@ export default function AddClientPage() {
       toast({
         title: 'Client created successfully',
       })
+
+      navigate("/admin/clients")
     } catch (error: any) {
       toast({
         title: 'Error creating supplier',
@@ -55,12 +61,13 @@ export default function AddClientPage() {
     (async () => {
       if (id) {
         const response = await CustomerService.findById(id)
-        const orders = await OrderService.findByCustomerId(id)
+        // const orders = await OrderService.findByCustomerId(id)
+        console.log(response)
         setFormValues({ ...response })
-        setHistory(orders)
+        // setHistory(orders)
       }
     })()
-  }, [])
+  }, [id])
 
   return (
     <BaseTemplate>
@@ -78,8 +85,9 @@ export default function AddClientPage() {
               <FormItem>
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} placeholder='Glenn Jennings' />
                 </FormControl>
+                <FormDescription>Nome completo do cliente</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -91,8 +99,17 @@ export default function AddClientPage() {
               <FormItem>
                 <FormLabel>Documento</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    {...field}
+                    placeholder='299.330.152-04'
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      field.onChange(value);
+                    }}
+                    value={field.value?.replace(/\D/g, "") || ""}
+                  />
                 </FormControl>
+                <FormDescription>CPF ou CNPJ do cliente</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -120,13 +137,9 @@ export default function AddClientPage() {
               <FormItem>
                 <FormLabel>Endereço</FormLabel>
                 <FormControl>
-                  <Input
-                    {...field}
-                  />
+                  <Input {...field} placeholder='32 Fijog View' />
                 </FormControl>
-                <FormDescription>
-                  Endereço do cliente
-                </FormDescription>
+                <FormDescription>Endereço do cliente</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -137,15 +150,22 @@ export default function AddClientPage() {
       {history.length > 0 && (
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <div className='flex w-full justify-between'>
-            <h2 className='text-2xl font-bold tracking-tight'>Histórico de pedido</h2>
+            <h2 className='text-2xl font-bold tracking-tight'>
+              Histórico de pedido
+            </h2>
           </div>
           <div className='flex flex-col'>
             {history.map((item: OrderFormValues, i: number) => {
               return (
-              <div key={i}>
-                <div><h3>{item.date.toString()}</h3></div>
-                <div><h3>{item.status}</h3></div>
-              </div>)
+                <div key={i}>
+                  <div>
+                    <h3>{item.date.toString()}</h3>
+                  </div>
+                  <div>
+                    <h3>{item.status}</h3>
+                  </div>
+                </div>
+              )
             })}
           </div>
         </div>

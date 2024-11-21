@@ -197,9 +197,8 @@ export default function AddOrderPage() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="0">PENDENTE</SelectItem>
-                    <SelectItem value="1">PAGO</SelectItem>
-                    <SelectItem value="2">AGUARDANDO</SelectItem>
+                    <SelectItem value="0">Pendente</SelectItem>
+                    <SelectItem value="1">Concluído</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

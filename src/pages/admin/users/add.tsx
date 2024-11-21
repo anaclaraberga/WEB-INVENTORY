@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -69,8 +70,11 @@ export default function AddUserPage() {
               <FormItem>
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} />
+                  <Input placeholder='Richard Ball' {...field} />
                 </FormControl>
+                <FormDescription>
+                  Nome completo da pessoa
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -82,8 +86,11 @@ export default function AddUserPage() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} />
+                  <Input placeholder='nowutecih@toj.gg' {...field} />
                 </FormControl>
+                <FormDescription>
+                  Email do usuário
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -95,7 +102,7 @@ export default function AddUserPage() {
               <FormItem>
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} type='password' />
+                  <Input placeholder='' {...field} type='password' />
                 </FormControl>
                 <FormDescription>
                   Senha de acesso
@@ -111,11 +118,35 @@ export default function AddUserPage() {
               <FormItem>
                 <FormLabel>Confirme sua senha</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} type='password' />
+                  <Input {...field} type='password' />
                 </FormControl>
                 <FormDescription>
-                  Senha de acesso
+                  Confirmação de senha
                 </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='type'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tipo</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder='Tipo de usuário' />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="CUSTOMER">Cliente</SelectItem>
+                    <SelectItem value="ADMIN">Administrador</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

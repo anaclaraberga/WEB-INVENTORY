@@ -76,6 +76,24 @@ export const columns: ColumnDef<SupplierSchema>[] = [
       return value.includes(row.getValue(id))
     }
   },
+  // {
+  //   accessorKey: 'cnpj',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title='CNPJ' />
+  //   ),
+  //   cell: ({ row }) => {
+  //     return (
+  //       <div className='flex space-x-2'>
+  //         <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+  //           {StringUtils.formatCnpj(row.getValue('cnpj'))}
+  //         </span>
+  //       </div>
+  //     )
+  //   },
+  //   filterFn: (row, id, value) => {
+  //     return value.includes(row.getValue(id))
+  //   }
+  // },
   {
     accessorKey: 'address',
     header: ({ column }) => (

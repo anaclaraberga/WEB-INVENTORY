@@ -1,3 +1,4 @@
+import { UserType } from "@/contexts/AuthContext"
 import { z } from "zod"
 
 export const userFormSchema = z.object({
@@ -21,6 +22,8 @@ export const userFormSchema = z.object({
     .min(7),
   confirm: z
     .string(),
+  type: z
+    .any(),
 }).refine((data) => data.password === data.confirm, {
   message: "Passwords don't match",
   path: ["confirm"],
@@ -33,4 +36,5 @@ export const defaultValues: Partial<UserFormValues> = {
   name: '',
   email: '',
   password: '',
+  type: UserType.CUSTOMER
 }

@@ -15,16 +15,18 @@ import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { supplierFormSchema, SupplierFormValues } from './form-schema'
 
 export default function AddSupplierPage() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [formValues, setFormValues] = useState<SupplierFormValues>({
     id: null,
     name: '',
     contact: '',
-    address: ''
+    cnpj: '',
+    address: '',
   })
 
   const form = useForm<SupplierFormValues>({
@@ -36,11 +38,16 @@ export default function AddSupplierPage() {
 
   async function onSubmit(data: SupplierFormValues) {
     try {
-      await SupplierService.create(data)
+      if (formValues.id) {
+        await SupplierService.update(data.id!, data)
+      } else {
+        await SupplierService.create(data)
+      }
 
       toast({
         title: 'Supplier created successfully',
       })
+      navigate('/admin/suppliers')
     } catch (error: any) {
       toast({
         title: 'Error creating supplier',
@@ -71,13 +78,15 @@ export default function AddSupplierPage() {
             control={form.control}
             name='name'
             render={({ field }) => {
-
               return (
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} placeholder='Theodore Franklin' />
                   </FormControl>
+                  <FormDescription>
+                    Nome completo do fornecedor
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )
@@ -97,6 +106,25 @@ export default function AddSupplierPage() {
                 </FormControl>
                 <FormDescription>
                   Informações para contato do fornecedor
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='cnpj'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>CNPJ</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='00.623.904/0001-73'
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  CNPJ do fornecedor
                 </FormDescription>
                 <FormMessage />
               </FormItem>

@@ -18,8 +18,10 @@ export default function Supplier() {
     (async () => {
       try {
         const response = await SupplierService.findAll()
+        console.log(response)
         setData(response)
       } catch (error) {
+        console.log(error)
         toast({
           title: 'Não foi possível conectar com o servidor',
           description: 'Tente novamente mais tarde',
