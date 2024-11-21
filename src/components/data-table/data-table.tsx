@@ -32,11 +32,11 @@ interface DataTableProps<TData, TValue> {
   toolbar: DataTableToolbarConfig
 }
 
-export function DataTable<TData, TValue>({
+export const DataTable = React.forwardRef(<TData, TValue>({
   columns,
   data,
   toolbar,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue>, ref: any) => {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({
     <div className='space-y-4'>
       <DataTableToolbar table={table} config={toolbar} />
       <div className='rounded-md border'>
-        <Table>
+        <Table ref={ref}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -123,4 +123,4 @@ export function DataTable<TData, TValue>({
       <DataTablePagination table={table} />
     </div>
   )
-}
+})
