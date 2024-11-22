@@ -1,9 +1,8 @@
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { Check, Linkedin } from "lucide-react";
+import { Check } from "lucide-react";
 import { LightBulbIcon } from "./Icons";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
-import { Button, buttonVariants } from "./ui/button";
+import { Button } from "./ui/button";
 import {
   Card,
   CardContent,
@@ -33,7 +32,7 @@ export const HeroCards = () => {
           </div>
         </CardHeader>
 
-        <CardContent>This landing page is awesome!</CardContent>
+        <CardContent>This landing system is awesome!</CardContent>
       </Card>
 
       {/* Team */}
@@ -52,60 +51,10 @@ export const HeroCards = () => {
 
         <CardContent className="text-center pb-2">
           <p>
-            I really enjoy transforming ideas into functional software that
-            exceeds expectations
+            This system has completely transformed the way we manage our inventory. It's intuitive, fast, and incredibly reliable!
           </p>
         </CardContent>
-
-        <CardFooter>
-          <div>
-            <a
-              rel="noreferrer noopener"
-              href="https://github.com/leoMirandaa"
-              target="_blank"
-              className={buttonVariants({
-                variant: "ghost",
-                size: "sm",
-              })}
-            >
-              <span className="sr-only">Github icon</span>
-              <GitHubLogoIcon className="w-5 h-5" />
-            </a>
-            <a
-              rel="noreferrer noopener"
-              href="https://twitter.com/leo_mirand4"
-              target="_blank"
-              className={buttonVariants({
-                variant: "ghost",
-                size: "sm",
-              })}
-            >
-              <span className="sr-only">X icon</span>
-              <svg
-                role="img"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                className="fill-foreground w-5 h-5"
-              >
-                <title>X</title>
-                <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
-              </svg>
-            </a>
-
-            <a
-              rel="noreferrer noopener"
-              href="https://www.linkedin.com/in/leopoldo-miranda/"
-              target="_blank"
-              className={buttonVariants({
-                variant: "ghost",
-                size: "sm",
-              })}
-            >
-              <span className="sr-only">Linkedin icon</span>
-              <Linkedin size="20" />
-            </a>
-          </div>
-        </CardFooter>
+        <CardFooter></CardFooter>
       </Card>
 
       {/* Pricing */}

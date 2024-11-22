@@ -1,5 +1,5 @@
-import { Statistics } from "./Statistics";
 import pilot from "../assets/pilot.png";
+import { Statistics } from "./Statistics";
 
 export const About = () => {
   return (
@@ -23,11 +23,7 @@ export const About = () => {
                 Company
               </h2>
               <p className="text-xl text-muted-foreground mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit
-                amet, consectetur adipiscing elit.
+                We specialize in delivering innovative solutions to simplify inventory management for businesses of all sizes. With a focus on efficiency, accuracy, and user-friendly design, our mission is to empower businesses to streamline their operations and achieve greater productivity. Founded on the principles of reliability and innovation, we are committed to providing tools that help our clients grow and succeed. Together, we’re shaping the future of inventory management.
               </p>
             </div>
 
