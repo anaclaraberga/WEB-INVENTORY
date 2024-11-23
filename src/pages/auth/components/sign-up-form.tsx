@@ -10,8 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { UserType } from '@/contexts/AuthContext'
-import { useAuth } from '@/hooks/use-auth'
+import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { HTMLAttributes, useState } from 'react'
@@ -48,7 +47,7 @@ const formSchema = z
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false)
-  const { login, isAuthenticated } = useAuth()
+  // const { login, isAuthenticated } = useAuth()
   const navigation = useNavigate()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -64,11 +63,22 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    const response = await AuthService.signUp(data as any);
+    try {
+      const response = await AuthService.signUp(data as any);
+      if (response.id) {
+        toast({
+          title: "Cadastro realizado com sucesso",
+          description: "Faça login para continuar"
+        })
 
-    if (response.id) {
-      navigation("/sign-in")
-      return
+        navigation("/sign-in")
+        return
+      }
+    } catch (error) {
+      toast({
+        title: "Ocorreu um erro",
+        description: "Tente novamente mais tarde"
+      })
     }
 
     setTimeout(() => {
