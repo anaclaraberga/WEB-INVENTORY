@@ -1,27 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table'
 
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
-import { DataTableRowActions, DropdownOption } from '@/components/data-table/data-table-row-actions'
 import { Checkbox } from '@/components/ui/checkbox'
 
 import { DataTableToolbarConfig } from '@/components/data-table/data-table-toolbar'
-import { ProductSchema, productSchema } from './schema'
-
-export const rowActionsOptions: DropdownOption[] = [
-  {
-    type: 'item',
-    value: 'edit',
-    label: 'Edit',
-    onClick: () => console.log('Edited')
-  },
-  {
-    type: 'item',
-    value: 'delete',
-    label: 'Delete',
-    className: '!text-red-500 hover:text-red-500',
-    onClick: () => console.log('Deleted')
-  },
-]
+import { NumberUtils } from '@/utils/NumberUtils'
+import { ProductSchema } from './schema'
 
 export const columns: ColumnDef<ProductSchema>[] = [
   {
@@ -84,7 +68,7 @@ export const columns: ColumnDef<ProductSchema>[] = [
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('price')}
+            {NumberUtils.formatToBRLCurrency(row.getValue('price'))}
           </span>
         </div>
       )
@@ -92,10 +76,6 @@ export const columns: ColumnDef<ProductSchema>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     }
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} schema={productSchema} options={rowActionsOptions} />,
   },
 ]
 

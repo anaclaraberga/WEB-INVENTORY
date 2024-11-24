@@ -19,30 +19,37 @@ import { NumberUtils } from '@/utils/NumberUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { SupplierFormValues } from '../suppliers/form-schema'
 import { defaultValues, productFormSchema, ProductFormValues } from './form-schema'
 
 export default function AddProductPage() {
+  const { id } = useParams()
   const [suppliers, setSuppliers] = useState([])
+  const [formValues, setFormValues] = useState(defaultValues)
   const navigate = useNavigate()
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
-    defaultValues,
+    defaultValues: formValues,
+    values: formValues,
     mode: 'onChange',
   })
 
   async function onSubmit(data: ProductFormValues) {
-    console.log(data)
     try {
-      const response = await ProductService.create(data);
+      if (data.id) {
+        await ProductService.update(data.id as number, data)
+      } else {
+        await ProductService.create(data);
+      }
 
       toast({
         title: 'Produto criado com sucesso',
         description: ''
       })
 
-      navigate("/user/products")
+      navigate("/admin/products")
 
     } catch (error: any) {
       toast({
@@ -50,15 +57,26 @@ export default function AddProductPage() {
         description: error.response.data.message
       })
     }
-    console.log(data)
   }
 
   const fileRef = form.register("image");
 
   useEffect(() => {
     (async () => {
-      const response = await SupplierService.findAll()
-      setSuppliers(response)
+      try {
+        if (id && typeof id == "number") {
+          const product = await ProductService.findById(id)
+          setFormValues(product)
+        }
+
+        const response = await SupplierService.findAll()
+        setSuppliers(response)
+      } catch (error) {
+        toast({
+          title: "Ocorreu um erro"
+        })
+      }
+
     })()
   }, [])
 
@@ -175,7 +193,7 @@ export default function AddProductPage() {
             name='fornecedorId'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Fornecedores</FormLabel>
+                <FormLabel>Fornecedor</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -186,8 +204,8 @@ export default function AddProductPage() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {suppliers.map((e, key) => (
-                      <SelectItem value={e.id} key={key}>{e.name}</SelectItem>
+                    {suppliers.map((e: SupplierFormValues, key) => (
+                      <SelectItem value={e.id!.toString()} key={key}>{e.name}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>

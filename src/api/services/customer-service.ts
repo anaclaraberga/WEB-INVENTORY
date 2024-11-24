@@ -20,7 +20,7 @@ export const CustomerService = {
   },
   update: async (id: string | number, data: ClientFormValues) => {
     const body = CustomerMapper.toRequest(data)
-    const response = await apiClient.post(
+    const response = await apiClient.put(
       `/customer/${id}`,
       JSON.stringify(body)
     )

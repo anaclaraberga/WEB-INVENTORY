@@ -119,8 +119,8 @@ export default function AddSupplierPage() {
                 <FormLabel>CNPJ</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='00.623.904/0001-73'
                     {...field}
+                    placeholder='00.623.904/0001-73'
                   />
                 </FormControl>
                 <FormDescription>

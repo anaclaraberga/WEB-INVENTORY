@@ -1,4 +1,4 @@
-import { OrderFormValues } from '@/pages/admin/orders/form-schema'
+import { ProductFormValues } from '@/pages/admin/products/form-schema'
 import apiClient from '../client/api'
 import { ProductMapper, ProductResponseDTO } from '../mappers/product-mapper'
 
@@ -13,35 +13,52 @@ export const ProductService = {
     const response = await apiClient.get(`/product/${id}`)
     return ProductMapper.toDomain(response.data)
   },
-  create: async (data: OrderFormValues) => {
-    const formData = new FormData();
+  create: async (data: ProductFormValues) => {
+    const formData = new FormData()
 
-    const body = ProductMapper.toRequest(data);
+    const body = ProductMapper.toRequest(data)
 
     for (const key in body) {
       if (body.hasOwnProperty(key)) {
-        if (key == "image") {
-          formData.append(key, body[key][0]);
-          continue;  
+        if (key == 'image') {
+          formData.append(key, body[key][0])
+          continue
         }
 
-        formData.append(key, body[key]);
+        formData.append(key, body[key])
       }
     }
 
     const headers = {
       'Content-Type': 'multipart/form-data',
-    };
+    }
 
-    const response = await apiClient.post('/product', formData, { headers });
-    return ProductMapper.toDomain(response.data);
+    const response = await apiClient.post('/product', formData, { headers })
+    return ProductMapper.toDomain(response.data)
   },
-  update: async (id: string | number, data: OrderFormValues) => {
+  update: async (id: string | number, data: ProductFormValues) => {
+    const formData = new FormData()
+
     const body = ProductMapper.toRequest(data)
-    const response = await apiClient.post(
-      `/product/${id}`,
-      JSON.stringify(body)
-    )
+
+    for (const key in body) {
+      if (body.hasOwnProperty(key)) {
+        if (key == 'image') {
+          formData.append(key, body[key][0])
+          continue
+        }
+
+        formData.append(key, body[key])
+      }
+    }
+
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+    }
+
+    const response = await apiClient.put(`/product/${id}`, formData, {
+      headers,
+    })
     return ProductMapper.toDomain(response.data)
   },
   delete: async (id: string | number) => {

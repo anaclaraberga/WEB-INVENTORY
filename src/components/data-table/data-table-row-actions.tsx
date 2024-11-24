@@ -24,13 +24,12 @@ export interface DropdownOption {
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
   options: DropdownOption[]
-  schema: any
+  schema?: any
 }
 
 export function DataTableRowActions<TData>({
   row,
   options,
-  schema
 }: DataTableRowActionsProps<TData>) {
 
   const renderDropdownOption = (option: DropdownOption) => {

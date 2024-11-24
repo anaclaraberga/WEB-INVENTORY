@@ -20,7 +20,7 @@ export const productFormSchema = z.object({
     .string({
       required_error: 'Produto precisa ter uma descrição',
     })
-    .min(3),
+    .optional(),
   price: z
     .number({
       required_error: 'O produto precisa ter um preço',

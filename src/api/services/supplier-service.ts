@@ -20,7 +20,7 @@ export const SupplierService = {
   },
   update: async (id: string | number, data: SupplierFormValues) => {
     const body = SupplierMapper.toRequest(data)
-    const response = await apiClient.post(
+    const response = await apiClient.put(
       `/supplier/${id}`,
       JSON.stringify(body)
     )
