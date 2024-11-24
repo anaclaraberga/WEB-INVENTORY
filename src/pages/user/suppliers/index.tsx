@@ -1,6 +1,7 @@
 import { SupplierService } from '@/api/services/supplier-service'
 import { SupplierCard } from '@/components/supplier-card'
 import { useToast } from '@/components/ui/use-toast'
+import { SupplierFormValues } from '@/pages/admin/suppliers/form-schema'
 import { BaseTemplate } from '@/template/Base'
 import { useEffect, useState } from 'react'
 
@@ -29,7 +30,7 @@ export default function UserSupplier() {
           <h1 className='text-3xl font-bold tracking-tight'>Fornecedores</h1>
         </div>
         <div className='w-full grid grid-cols-4 gap-4 items-start justify-start'>
-          {data.map((e, i) => {
+          {data.map((e: SupplierFormValues, i) => {
             return <SupplierCard key={i} name={e.name} description={e.contact + " - " + e.address} />
           })}
         </div>

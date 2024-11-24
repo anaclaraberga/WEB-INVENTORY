@@ -1,11 +1,10 @@
+import { ProductResponseDTO } from '@/api/mappers/product-mapper'
 import { ProductService } from '@/api/services/product-service'
 import { ProductCard, ProductCardAction } from '@/components/product-card'
 import { BaseTemplate } from '@/template/Base'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 export default function UserProducts() {
-  const navigation = useNavigate()
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -23,11 +22,11 @@ export default function UserProducts() {
           <h1 className='text-3xl font-bold tracking-tight'>Produtos</h1>
         </div>
         <div className='grid grid-cols-4 gap-4 items-start justify-start'>
-          {data.length > 0 && data.map((e, i: number) => {
+          {data.length > 0 && data.map((e: ProductResponseDTO, i: number) => {
             return (
               <ProductCard
                 key={i}
-                id={e}
+                id={e.id as string}
                 imgUrl={"http://localhost:8080/" + e.image}
                 price={e.price}
                 title={e.name}
