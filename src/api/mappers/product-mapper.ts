@@ -13,9 +13,9 @@ export interface ProductResponseDTO {
 }
 
 export const ProductMapper = {
-  toDomain: (response: ProductResponseDTO): ProductFormValues => {
+  toDomain: (response: ProductResponseDTO): any => {
     return {
-      id: response.id,
+      id: response.id! as number,
       name: response.name,
       description: response.description,
       price: response.price,

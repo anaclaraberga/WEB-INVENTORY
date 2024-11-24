@@ -1,5 +1,6 @@
 import { CustomerService } from '@/api/services/customer-service'
 import { OrderService } from '@/api/services/order-service'
+import { ProductService } from '@/api/services/product-service'
 import { Button } from '@/components/custom/button'
 import {
   Form,
@@ -8,25 +9,29 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from '@/components/ui/select'
 import { toast } from '@/components/ui/use-toast'
 import { BaseTemplate } from '@/template/Base'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SelectValue } from '@radix-ui/react-select'
-import { Trash } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
+import { ProductFormValues } from '../products/form-schema'
+import { ProductItemRow } from './components/product-item-row'
 import { defaultValues, orderFormSchema, OrderFormValues } from './form-schema'
-import { ProductService } from '@/api/services/product-service'
 
 export default function AddOrderPage() {
   const { id } = useParams()
   const [formValues, setFormValues] = useState(defaultValues)
-  const [products, setProducts] = useState<any>([]);
+  const [products, setProducts] = useState<any>([])
   const [clients, setClients] = useState([])
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
@@ -35,18 +40,38 @@ export default function AddOrderPage() {
     mode: 'onChange',
   })
 
-  const addProduct = () => {
-    const product = { id: '', quantity: 1 };
-    setFormValues({ ...form.getValues(), products: [...form.getValues().products, product] })
-  };
+  const addProduct = async () => {
+    const product = await ProductService.findById(
+      form.getValues().selectedProduct
+    )
+
+    const newProduct = {
+      productId: product.id!.toString(),
+      quantity: 1,
+      name: product.name,
+      image: product.image,
+      price: product.price
+    }
+
+    setFormValues({
+      ...form.getValues(),
+      products: [...form.getValues().products, newProduct],
+    })
+  }
 
   const removeProduct = (index: number) => {
-    setFormValues({ ...formValues, products: formValues.products.filter((_: any, i: number) => i !== index) });
-  };
+    setFormValues({
+      ...formValues,
+      products: formValues.products.filter((_: any, i: number) => i !== index),
+    })
+  }
 
   const onSubmit = async (data: any) => {
+    console.log(form.getValues(), data)
+    return;
+
     if (data.products.length == 0) {
-      alert("É necessário possuir ao menos um produto")
+      alert('É necessário possuir ao menos um produto')
       return
     }
 
@@ -65,11 +90,12 @@ export default function AddOrderPage() {
   }
 
   useEffect(() => {
-    (async () => {
-      const apiProducts = await ProductService.findAll()
+    ; (async () => {
+      const [apiProducts, apiClients] = await Promise.all([
+        ProductService.findAll(),
+        CustomerService.findAll(),
+      ])
       setProducts(apiProducts)
-
-      const apiClients = await CustomerService.findAll()
       setClients(apiClients)
 
       if (id) {
@@ -87,7 +113,10 @@ export default function AddOrderPage() {
         </div>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(async (e) => await onSubmit(e))} className='space-y-8'>
+        <form
+          onSubmit={form.handleSubmit(async (e) => await onSubmit(e))}
+          className='space-y-8'
+        >
           <FormField
             control={form.control}
             name='clientId'
@@ -96,10 +125,7 @@ export default function AddOrderPage() {
                 <FormItem>
                   <FormLabel>Cliente</FormLabel>
                   <FormControl>
-                    <Select
-                      {...field}
-                      onValueChange={field.onChange}
-                    >
+                    <Select {...field} onValueChange={field.onChange}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder='Clientes' />
@@ -107,7 +133,9 @@ export default function AddOrderPage() {
                       </FormControl>
                       <SelectContent>
                         {clients.map((e, key) => (
-                          <SelectItem value={e.id.toString()} key={key}>{e.name}</SelectItem>
+                          <SelectItem value={e.id.toString()} key={key}>
+                            {e.name}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -118,68 +146,51 @@ export default function AddOrderPage() {
             }}
           />
 
-          <div className="mb-4">
-            <h3 className="text-lg font-bold">Produtos</h3>
+          <div className='mb-4'>
+            <h3 className='text-lg font-bold'>Produtos</h3>
+            <div className='flex items-center justify-start gap-4'>
+              <FormField
+                name='selectedProduct'
+                render={({ field }) => (
+                  <FormItem className='w-full'>
+                    <FormLabel>Produto</FormLabel>
+                    <FormControl>
+                      <Select
+                        {...field}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder='Selecione o produto' />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {products.map((e: ProductFormValues) => (
+                            <SelectItem value={e.id!.toString()} key={e.name}>
+                              {e.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormDescription>Escolha o produto</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type='button' variant='secondary' onClick={addProduct}>
+                Adicionar Produto
+              </Button>
+            </div>
+
             {formValues.products.map((product, index: number) => (
-              <div key={index} className="flex gap-2 mb-2">
-                <FormField
-                  control={form.control}
-                  name={`products.${index}.productId`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Produto</FormLabel>
-                      <FormControl>
-                        <Select
-                          {...field}
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione o produto"/>
-                          </SelectTrigger>
-                          <SelectContent>
-                            {products.map((e: any) => (
-                              <SelectItem value={e.id} key={e.name}>{e.name}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormDescription>Escolha o produto</FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`products.${index}.quantity`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Quantidade</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="number"
-                          min="1"
-                          {...field}
-                          defaultValue={product.quantity}
-                          onChange={(e) => form.setValue(`products.${index}.quantity`, Number(e.target.value))}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <div className='h-full flex flex-col justify-between space-y-4'>
-                  <FormLabel>Ações</FormLabel>
-                  <Button type="button" variant="ghost" onClick={() => removeProduct(index)}>
-                    <Trash width={18} className='text-red-500' />
-                  </Button>
-                </div>
-              </div>
+              <ProductItemRow
+                form={form}
+                product={product}
+                index={index}
+                key={index}
+                onRemoveItem={() => removeProduct(index)}
+              />
             ))}
-            <Button type="button" variant="secondary" onClick={addProduct}>
-              Adicionar Produto
-            </Button>
           </div>
 
           <FormField
@@ -198,8 +209,8 @@ export default function AddOrderPage() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="ACTIVE">Pendente</SelectItem>
-                    <SelectItem value="INACTIVE">Concluído</SelectItem>
+                    <SelectItem value='ACTIVE'>Pendente</SelectItem>
+                    <SelectItem value='INACTIVE'>Concluído</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
