@@ -1,5 +1,5 @@
 
-import { CircleUser, ClipboardList, FileChartPie, LayoutDashboard, Package, Truck, Users } from 'lucide-react'
+import { ArrowLeftRight, Boxes, CircleDollarSign, CircleUser, ClipboardList, FileChartPie, LayoutDashboard, Package, Truck, Users } from 'lucide-react'
 
 export interface NavLink {
   title: string
@@ -59,19 +59,19 @@ export const sidelinks: SideLink[] = [
         title: 'Estoque',
         label: '',
         href: '/admin/reports/stock',
-        icon: <FileChartPie size={18} />,
+        icon: <Boxes size={18} />,
       },
       {
         title: 'Vendas',
         label: '',
         href: '/admin/reports/sales',
-        icon: <FileChartPie size={18} />,
+        icon: <CircleDollarSign size={18} />,
       },
       {
         title: 'Transações',
         label: '',
         href: '/admin/reports/transactions',
-        icon: <FileChartPie size={18} />,
+        icon: <ArrowLeftRight size={18} />,
       },
     ]
   },
