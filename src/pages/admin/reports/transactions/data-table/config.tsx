@@ -110,5 +110,34 @@ export const columns: ColumnDef<TransactionSchema>[] = [
 export const toolbar: DataTableToolbarConfig = {
   placeholder: 'Filtrar transações...',
   searchKey: 'data',
-  filters: []
+  filters: [{
+    type: "select",
+    key: "type",
+    title: "Tipo da transação",
+    options: [
+      {
+        label: "Entrada",
+        value: "ENTRADA"
+      },
+      {
+        label: "Saída",
+        value: "SAIDA"
+      }
+    ]
+  },
+  {
+    type: "date",
+    key: "type",
+    title: "Data",
+    options: [
+      {
+        label: "Data inicial",
+        value: ""
+      },
+      {
+        label: "Data final",
+        value: ""
+      }
+    ]
+  }]
 }

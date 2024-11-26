@@ -11,6 +11,7 @@ export interface DataTableToolbarConfig {
   placeholder: string,
   searchKey: string,
   filters: {
+    type?: string,
     key: string,
     title: string,
     options: {
@@ -44,14 +45,27 @@ export function DataTableToolbar<TData>({
         />
         <div className='flex gap-x-2'>
           {config.filters.map((filter, key) => {
-            return table.getColumn(filter.key) && (
-              <DataTableFacetedFilter
-              key={key}
-                column={table.getColumn(filter.key)}
-                title={filter.title}
-                options={filter.options}
-              />
-            )
+            if (filter.type == 'select') {
+              return table.getColumn(filter.key) && (
+                <DataTableFacetedFilter
+                  key={key}
+                  column={table.getColumn(filter.key)}
+                  title={filter.title}
+                  options={filter.options}
+                />
+              )
+            }
+
+            if (filter.type == 'date') {
+              return table.getColumn(filter.key) && (
+                <DataTableFacetedFilter
+                  key={key}
+                  column={table.getColumn(filter.key)}
+                  title={filter.title}
+                  options={filter.options}
+                />
+              )
+            }
           })}
         </div>
         {isFiltered && (
