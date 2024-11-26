@@ -1,11 +1,11 @@
-import { TransactionService } from "@/api/services/transaction-service"
-import { Button } from "@/components/custom/button"
-import { DataTable } from "@/components/data-table/data-table"
-import { useToast } from "@/components/ui/use-toast"
-import { BaseTemplate } from "@/template/Base"
-import { useEffect, useRef, useState } from "react"
-import { useReactToPrint } from "react-to-print"
-import { columns, toolbar } from "./data-table/config"
+import { TransactionService } from '@/api/services/transaction-service'
+import { Button } from '@/components/custom/button'
+import { DataTable } from '@/components/data-table/data-table'
+import { useToast } from '@/components/ui/use-toast'
+import { BaseTemplate } from '@/template/Base'
+import { useEffect, useRef, useState } from 'react'
+import { useReactToPrint } from 'react-to-print'
+import { columns, toolbar } from './data-table/config'
 
 export const TransactionsReport = () => {
   const [data, setData] = useState([])
@@ -13,14 +13,14 @@ export const TransactionsReport = () => {
   const tableRef = useRef(null)
   const handlePrint = useReactToPrint({
     contentRef: tableRef as any,
-  });
+  })
 
   const handleDownloadReport = () => {
-    handlePrint(tableRef as any);
-  };
+    handlePrint(tableRef as any)
+  }
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       try {
         const response = await TransactionService.findAll()
         setData(response)
@@ -45,7 +45,12 @@ export const TransactionsReport = () => {
         </div>
       </div>
       <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-        <DataTable data={data} columns={columns} toolbar={toolbar} ref={tableRef} />
+        <DataTable
+          data={data}
+          columns={columns}
+          toolbar={toolbar}
+          ref={tableRef}
+        />
       </div>
     </BaseTemplate>
   )
