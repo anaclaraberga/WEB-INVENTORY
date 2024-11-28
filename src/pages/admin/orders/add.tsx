@@ -67,9 +67,6 @@ export default function AddOrderPage() {
   }
 
   const onSubmit = async (data: any) => {
-    console.log(form.getValues(), data)
-    return;
-
     if (data.products.length == 0) {
       alert('É necessário possuir ao menos um produto')
       return

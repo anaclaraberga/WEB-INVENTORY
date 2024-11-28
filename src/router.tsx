@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import AppShell from './components/app-shell.tsx';
 import Loader from './components/loader.tsx';
-import { CartProvider } from './contexts/CartContext.tsx';
 import AddClientPage from './pages/admin/clients/add.tsx';
 import Clients from './pages/admin/clients/index.tsx';
 import Dashboard from './pages/admin/dashboard/index.tsx';
@@ -62,7 +61,7 @@ const AppRouter = () => (
               <Route path="sales" element={<ProtectedRoute><SalesReport /></ProtectedRoute>} />
             </Route>
           </Route>
-          <Route path="user" element={<CartProvider><AppShell /></CartProvider>}>
+          <Route path="user" element={<AppShell />}>
             <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="products" element={<ProtectedRoute><UserProducts /></ProtectedRoute>} />
             <Route path="cart" element={<ProtectedRoute><UserCart /></ProtectedRoute>} />

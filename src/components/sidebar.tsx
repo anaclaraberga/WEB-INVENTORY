@@ -18,7 +18,7 @@ export default function Sidebar({
   setIsCollapsed,
 }: SidebarProps) {
   const [navOpened, setNavOpened] = useState(false)
-  const {sideLinks} = useAuth()
+  const { sideLinks } = useAuth()
 
   useEffect(() => {
     if (navOpened) {
@@ -93,7 +93,7 @@ export default function Sidebar({
         </Button>
 
         <Layout.Header>
-          <UserNav/> Perfil
+          <UserNav /> Perfil
         </Layout.Header>
       </Layout>
     </aside>

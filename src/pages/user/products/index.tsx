@@ -34,6 +34,9 @@ export default function UserProducts() {
                 actions={[ProductCardAction.ADD_TO_CART]}
               />)
           })}
+          {data.length == 0 && (
+            <h2>Nenhum produto cadastrado</h2>
+          )}
         </div>
       </div>
     </BaseTemplate>

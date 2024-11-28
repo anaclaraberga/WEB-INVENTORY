@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 import { DateFilter } from './toolbar/filters/date-filter'
+import { SelectFilter } from './toolbar/filters/select-filter'
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>
@@ -35,6 +36,7 @@ export function DataTableFacetedFilter<TData, TValue>({
   column,
   title,
   options,
+  type
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues()
   const selectedValues = new Set(column?.getFilterValue() as string[])
@@ -65,10 +67,10 @@ export function DataTableFacetedFilter<TData, TValue>({
                 ) : (
                   options
                     .filter((option) => selectedValues.has(option.value))
-                    .map((option) => (
+                    .map((option, key) => (
                       <Badge
                         variant='secondary'
-                        key={option.value}
+                        key={option.value + key}
                         className='rounded-sm px-1 font-normal'
                       >
                         {option.label}
@@ -88,16 +90,31 @@ export function DataTableFacetedFilter<TData, TValue>({
             <CommandGroup>
               {options.map((option, key) => {
                 const isSelected = selectedValues.has(option.value)
-                return (
-                  <DateFilter
-                    column={column}
-                    facets={facets}
-                    isSelected={isSelected}
-                    option={option}
-                    selectedValues={selectedValues}
-                    key={key}
-                  />
-                )
+                if (type == 'select') {
+                  return (
+                    <SelectFilter
+                      column={column}
+                      facets={facets}
+                      isSelected={isSelected}
+                      option={option}
+                      selectedValues={selectedValues}
+                      key={key}
+                    />
+                  )
+                }
+
+                if (type == 'date') {
+                  return (
+                    <DateFilter
+                      column={column}
+                      facets={facets}
+                      isSelected={isSelected}
+                      option={option}
+                      selectedValues={selectedValues}
+                      key={key}
+                    />
+                  )
+                }
               })}
             </CommandGroup>
             {selectedValues.size > 0 && (

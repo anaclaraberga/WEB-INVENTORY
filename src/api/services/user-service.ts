@@ -20,7 +20,7 @@ export const UserService = {
   },
   update: async (id: string | number, data: UserFormValues) => {
     const body = UserMapper.toRequest(data)
-    const response = await apiClient.post(`/user/${id}`, JSON.stringify(body))
+    const response = await apiClient.put(`/user/${id}`, JSON.stringify(body))
     return UserMapper.toDomain(response.data)
   },
   delete: async (id: string | number) => {

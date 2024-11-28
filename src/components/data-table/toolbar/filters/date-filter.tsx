@@ -13,9 +13,17 @@ export const DateFilter = ({ option, isSelected, selectedValues, column, facets 
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
     setIsOpen(false);
-  };
 
-  console.log(selectedDate)
+    if (isSelected) {
+      selectedValues.delete(option.value)
+    } else {
+      selectedValues.add(option.value)
+    }
+    const filterValues = Array.from(selectedValues)
+    column?.setFilterValue(
+      filterValues.length ? filterValues : undefined
+    )
+  };
 
   const format = (date: Date | null) => {
     if (!date) return 'Selecionar Data';
@@ -27,18 +35,7 @@ export const DateFilter = ({ option, isSelected, selectedValues, column, facets 
 
   return (
     <CommandItem
-      key={option.value}
-      onSelect={() => {
-        if (isSelected) {
-          selectedValues.delete(option.value)
-        } else {
-          selectedValues.add(option.value)
-        }
-        const filterValues = Array.from(selectedValues)
-        column?.setFilterValue(
-          filterValues.length ? filterValues : undefined
-        )
-      }}
+      key={option.value + new Date().toISOString()}
     >
       <Popover>
         <PopoverTrigger asChild>
@@ -60,7 +57,7 @@ export const DateFilter = ({ option, isSelected, selectedValues, column, facets 
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode="single"
-            selected={selectedDate}
+            selected={selectedDate ?? new Date()}
             onSelect={handleDateChange}
             disabled={(date) =>
               date > new Date() || date < new Date("1900-01-01")

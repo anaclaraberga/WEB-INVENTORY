@@ -32,14 +32,18 @@ export default function AddUserPage() {
 
   async function onSubmit(data: UserFormValues) {
     try {
-      await UserService.create(data)
+      if (formValues.id) {
+        await UserService.update(data.id, data)
+      } else {
+        await UserService.create(data)
+      }
 
       toast({
         title: 'User created successfully',
       })
     } catch (error: any) {
       toast({
-        title: 'Error creating supplier',
+        title: 'Error creating user',
         description: error.message,
       })
     }
@@ -143,7 +147,7 @@ export default function AddUserPage() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="CUSTOMER">Cliente</SelectItem>
+                    <SelectItem value="DEFAULT">Padrão</SelectItem>
                     <SelectItem value="ADMIN">Administrador</SelectItem>
                   </SelectContent>
                 </Select>

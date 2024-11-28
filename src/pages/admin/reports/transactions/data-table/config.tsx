@@ -30,7 +30,19 @@ export const columns: ColumnDef<TransactionSchema>[] = [
       )
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      console.log(value)
+      const compareDates = (d1, d2) => {
+        let date1 = new Date(d1).getTime();
+        let date2 = new Date(d2).getTime();
+
+        if (date1 < date2) {
+          return false
+        }
+
+        return true
+      };
+
+      return compareDates(row.getValue(id), value)
     }
   },
   {
@@ -109,7 +121,7 @@ export const columns: ColumnDef<TransactionSchema>[] = [
 
 export const toolbar: DataTableToolbarConfig = {
   placeholder: 'Filtrar transações...',
-  searchKey: 'data',
+  searchKey: 'dateTimeAtCreation',
   filters: [{
     type: "select",
     key: "type",

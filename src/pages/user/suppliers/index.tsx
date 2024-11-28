@@ -33,6 +33,9 @@ export default function UserSupplier() {
           {data.map((e: SupplierFormValues, i) => {
             return <SupplierCard key={i} name={e.name} description={e.contact + " - " + e.address} />
           })}
+          {data.length == 0 && (
+            <h2>Nenhum fornecedor cadastrado</h2>
+          )}
         </div>
       </div>
     </BaseTemplate>
